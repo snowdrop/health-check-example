@@ -2,11 +2,17 @@
 
 This example demonstrates an OpenShift health check feature with two Spring Boot microservices.
 
-Example consists of two microservices: name-service and hello-service.
+The quickstart consists of two microservices `name-service` and `hello-service`.
 
-name-service exposes a GET endpoint returning a name as a String, which is configured in its application.properties file.
+- `name-service` exposes a GET endpoint returning a name as a String.
+- `hello-service` exposes a GET endpoint returning a hello message. It calls the REST endpoint of the `name-service` to get a name to whom the hello message is addressed.
 
-hello-service exposes a GET endpoint returning a hello message. It uses the name-service to get a name to whom the hello message is addressed. Because of this relationship, hello-service implements a [health indicator](https://github.com/gytis/spring-boot-health-check-example/blob/master/hello-service/src/main/java/org/jboss/snowdrop/hello/HelloServiceHealthIndicator.java#L30) to verify that name-service can be used. In case of the name-service being unavailable, hello-service will become unhealthy. OpenShift probe will notice that and will make it unavailable and outside users will get an HTTP status 503 (service unavailable). hello-service will become available again as soon as a name-service becomes available.
+Because of this relationship, hello-service implements a [health indicator](https://github.com/gytis/spring-boot-health-check-example/blob/master/hello-service/src/main/java/org/jboss/snowdrop/hello/HelloServiceHealthIndicator.java#L30)
+to verify that name-service can be used.
+
+In case of the name-service being unavailable, `hello-service` will become unhealthy.
+OpenShift probe will notice that and will make it unavailable and outside users will get an HTTP status 503 (service unavailable).
+`hello-service` will then become available again as soon as the `name-service` becomes available.
 
 ### Usage
 
