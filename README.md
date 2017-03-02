@@ -3,6 +3,7 @@
 This QuickStart demonstrates the health check feature using two Spring Boot microservices.
 The `name-service` exposes a REST endpoint which returns a name as a String when it is called while the `hello-service` exposes
 another REST endpoint which returns a hello message to the user.
+
 Before to reply to the user it will call the `name-service` in order to get the name to be returned within the Hello World Message.
 
 To control if the `name-service` is still alive, the `hello-service` implements the Health Check pattern to verify the status of the service
@@ -29,7 +30,10 @@ If now the `name-service` is down and unreachable, then the `hello-service` will
 and will become unhealthy as the Health Status reported is `down`.
  
 As Openshift probes the service to control its Health status, it will discover that the health status of the `hello-service` is now `Down`
-and will it unavailable. So, every call issued to the `hello-service` through the Openshift service will receive a HTTP status 503 (service unavailable).
+and will make it unavailable.
+
+So, every call issued to the `hello-service` through the Openshift service will receive a HTTP status 503 (service unavailable).
+
 When the `name-service` will be restored (example : new pod created) and that `hello-service` will discover that now it is again alive, then its health check status
 will be changed to Up and OpenShift will allow to access it again.
 
