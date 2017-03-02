@@ -31,7 +31,6 @@ and will become unhealthy as the Health Status reported is `down`.
  
 As Openshift probes the service to control its Health status, it will discover that the health status of the `hello-service` is now `Down`
 and will make it unavailable.
-
 So, every call issued to the `hello-service` through the Openshift service will receive a HTTP status 503 (service unavailable).
 
 When the `name-service` will be restored (example : new pod created) and that `hello-service` will discover that now it is again alive, then its health check status
