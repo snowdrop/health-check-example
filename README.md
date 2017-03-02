@@ -33,20 +33,20 @@ As Openshift probes the service to control its Health status, it will discover t
 and will make it unavailable.
 So, every call issued to the `hello-service` through the Openshift service will receive a HTTP status 503 (service unavailable).
 
-When the `name-service` will be restored (example : new pod created) and that `hello-service` will discover that now it is again alive, then its health check status
+When the `name-service` will be restored (example : new pod created) and that `hello-service` will discover that it is alive again, then its health check status
 will be changed to Up and OpenShift will allow to access it again.
 
 ### Usage
 
 1. Deploy microservices with Fabric8 maven plugin:
 
-    mvn clean fabric8:deploy
+    mvn clean fabric8:deploy -Popenshift
 
 2. Open OpenShift console and navigate to your project's overview page.
 
 3. Wait until both services are running.
 
-4. Scale down `name-service` to `0` pod. Then the `hello-service` probe will start failing and OpenShift will make this service unavailable from outside.
+4. Scale down `name-service` to `0` pod. Then the `hello-service` probe will start to fail and OpenShift will make this service unavailable from outside.
 
 5. If you'd try to call the `hello-service` route, you should get an HTTP error 503 service unavailable.
 
