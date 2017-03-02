@@ -43,8 +43,8 @@ will be changed to Up and OpenShift will allow to access it again.
 
 3. Wait until both services are running.
 
-4. Scale down name-service to 0 pods. hello-service probes will start failing and OpenShift will make this service unavailable from outside.
+4. Scale down `name-service` to `0` pod. Then the `hello-service` probe will start failing and OpenShift will make this service unavailable from outside.
 
-5. If you'd try to open a hello-service route you should get an HTTP error 503 service unavailable.
+5. If you'd try to call the `hello-service` route, you should get an HTTP error 503 service unavailable.
 
-6. Scale up name-service to 1 pod. hello-service probes will start passing and OpenShift will make this service available again.
+6. Scale up `name-service` to 1 pod. Soon, you will see that the `hello-service` probe will start again and OpenShift will make this service available again.
