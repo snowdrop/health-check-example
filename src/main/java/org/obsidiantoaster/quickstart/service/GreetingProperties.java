@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.hello;/*
+/*
  * Copyright 2016-2017 Red Hat, Inc, and individual contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,17 +14,22 @@ package org.jboss.snowdrop.hello;/*
  * limitations under the License.
  */
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+package org.obsidiantoaster.quickstart.service;
 
-/**
- * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
- */
-@SpringBootApplication
-public class HelloServiceApplication {
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-	public static void main(String... args) {
-		SpringApplication.run(HelloServiceApplication.class, args);
-	}
+@Component
+@ConfigurationProperties("greeting")
+public class GreetingProperties {
 
+    private String message = "Hello, %s!";
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

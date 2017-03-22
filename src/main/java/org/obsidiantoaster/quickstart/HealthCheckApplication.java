@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2016-2017 Red Hat, Inc, and individual contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.jboss.snowdrop.name;
+package org.obsidiantoaster.quickstart;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
- */
 @SpringBootApplication
-public class NameServiceApplication {
+public class HealthCheckApplication {
 
-	public static void main(String... args) {
-		SpringApplication.run(NameServiceApplication.class, args);
+	public static void main(String[] args) {
+		SpringApplication.run(HealthCheckApplication.class, args);
 	}
-
 }
