@@ -36,14 +36,14 @@ public class HealthCheckApplicationTest {
 
 	@Test
 	public void callServiceTest() {
-		Greeting message = template.getForObject("http://localhost:" + port + "/greeting", Greeting.class);
+		Greeting message = template.getForObject("http://localhost:" + port + "/api/greeting", Greeting.class);
 		Assert.assertEquals("Hello, World!", message.getContent());
 		Assert.assertEquals(1, message.getId());
 	}
 
 	@Test
 	public void callShutdownTest() {
-		template.getForObject("http://localhost:" + port + "/killme", Void.class);
+		template.getForObject("http://localhost:" + port + "/api/killme", Void.class);
 	}
 
 }
