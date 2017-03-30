@@ -1,53 +1,53 @@
 ### Description
 
-This QuickStart demonstrates the health check feature using two Spring Boot microservices.
-The `name-service` exposes a REST endpoint which returns a name as a String when it is called while the `hello-service` exposes
-another REST endpoint which returns a hello message to the user.
+This quickstart demonstrates the health check feature using Spring Boot microservices.
 
-Before to reply to the user it will call the `name-service` in order to get the name to be returned within the Hello World Message.
+We have two REST endpoints, a greeting endpoint and a shutdown endpoint. The first one returns a simple hello string, while the second one shuts down JVM (System.exit(0)). 
+To demonstrate how health check functions, simply invoke shutdown endpoint, and OpenShift should, based on health check, re-create new pod with your app.
 
-To control if the `name-service` is still alive, the `hello-service` implements the Health Check pattern to verify the status of the service
 
-```
-	private boolean isNameServiceUp() {
-		RestTemplate restTemplate = new RestTemplate();
-		try {
-			return restTemplate.exchange(HelloServiceController.NAME_SERVICE_URL, HttpMethod.GET, null, String.class)
-					.getStatusCodeValue() == 200;
-		} catch (Throwable t) {
-			return false;
-		}
-	}
-```
+### OpenShift Online
 
-If `name-service` is alive, it will get as HTTP response the status `200` and the Health Status reported by the Spring Boot actuator will be `Up`
-  
-```
-return Health.up()
-```
-  
-If now the `name-service` is down and unreachable, then the `hello-service` will be informed about this situation due to the heartbit session managed by Spring Boot
-and will become unhealthy as the Health Status reported is `down`.
- 
-As Openshift probes the service to control its Health status, it will discover that the health status of the `hello-service` is now `Down`
-and will make it unavailable.
-So, every call issued to the `hello-service` through the Openshift service will receive a HTTP status 503 (service unavailable).
+1. Go to [OpenShift Online](https://console.dev-preview-int.openshift.com/console/command-line) to get the token used by the oc client for authentication and project access. 
 
-When the `name-service` will be restored (example : new pod created) and that `hello-service` will discover that it is alive again, then its health check status
-will be changed to Up and OpenShift will allow to access it again.
+2. On the oc client, execute the following command to replace MYTOKEN with the one from the Web Console:
 
-### Usage
+    ```
+    oc login https://api.dev-preview-int.openshift.com --token=MYTOKEN
+    ```
+3. Use the Fabric8 Maven Plugin to launch the S2I process on the OpenShift Online machine & start the pod.
 
-1. Deploy microservices with Fabric8 maven plugin:
+    ```
+    mvn clean fabric8:deploy -Popenshift  -DskipTests
+    ```
+    
+4. Get the route url.
 
-    mvn clean fabric8:deploy -Popenshift
+    ```
+    oc get route/health-check-springboot
+    NAME              HOST/PORT                                          PATH      SERVICE                TERMINATION   LABELS
+    health-check-springboot   <HOST_PORT_ADDRESS>             health-check-springboot:8080
+    ```
 
-2. Open OpenShift console and navigate to your project's overview page.
+5. Use the Host or Port address to access the greeting REST endpoint.
+    ```
+    http http://<HOST_PORT_ADDRESS>/api/greeting
+    http http://<HOST_PORT_ADDRESS>/api/greeting name==John
 
-3. Wait until both services are running.
+    or 
 
-4. Scale down `name-service` to `0` pod. Then the `hello-service` probe will start to fail and OpenShift will make this service unavailable from outside.
+    curl http://<HOST_PORT_ADDRESS>/api/greeting
+    curl http://<HOST_PORT_ADDRESS>/api/greeting name==John
+    ```
 
-5. If you'd try to call the `hello-service` route, you should get an HTTP error 503 service unavailable.
+6. Use the Host or Port address to access the shutdown REST endpoint.
+    ```
+    http http://<HOST_PORT_ADDRESS>/api/killme
 
-6. Scale up `name-service` to 1 pod. Soon, you will see that the `hello-service` probe will start again and OpenShift will make this service available again.
+    or 
+
+    curl http://<HOST_PORT_ADDRESS>/api/killme
+    ```
+    This should shutdown current process / JVM. 
+    Since health check service wouldn't provide any proper response, OpenShift will re-create the pod.
+    Wait a few seconds, and you should again be able to invoke greeting endpoint.
