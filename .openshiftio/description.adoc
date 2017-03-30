@@ -1,0 +1,1 @@
+Quickstart to demonstrate OpenShift health probes working with Spring Boot Actuator
