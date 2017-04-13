@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Route
 metadata:
-  name: health-check-springboot
+  name: spring-boot-health-check
 spec:
   port:
     targetPort: 8080
   to:
     kind: Service
-    name: health-check-springboot
+    name: spring-boot-health-check

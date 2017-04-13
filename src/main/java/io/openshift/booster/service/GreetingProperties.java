@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.obsidiantoaster.quickstart.service;
+package io.openshift.booster.service;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

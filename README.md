@@ -2,7 +2,7 @@
 
 This quickstart demonstrates the health check feature using Spring Boot microservices.
 
-We have two REST endpoints, a greeting endpoint and a shutdown endpoint. The first one returns a simple hello string, while the second one shuts down JVM (System.exit(0)). 
+We have two REST endpoints, a greeting endpoint and a shutdown endpoint. The first one returns a simple hello string, while the second one shuts down SpringBoot server. 
 To demonstrate how health check functions, simply invoke shutdown endpoint, and OpenShift should, based on health check, re-create new pod with your app.
 
 
@@ -18,7 +18,7 @@ To demonstrate how health check functions, simply invoke shutdown endpoint, and 
 3. Use the Fabric8 Maven Plugin to launch the S2I process on the OpenShift Online machine & start the pod.
 
     ```
-    mvn clean fabric8:deploy -Popenshift  -DskipTests
+    mvn clean fabric8:deploy -Popenshift -DskipTests
     ```
     
 4. Get the route url.
@@ -48,6 +48,16 @@ To demonstrate how health check functions, simply invoke shutdown endpoint, and 
 
     curl http://<HOST_PORT_ADDRESS>/api/killme
     ```
-    This should shutdown current process / JVM. 
+    This should shutdown current SpringBoot server. 
     Since health check service wouldn't provide any proper response, OpenShift will re-create the pod.
     Wait a few seconds, and you should again be able to invoke greeting endpoint.
+    
+7. Use the Host or Port address to access the health-check REST endpoint.
+    ```
+    http http://<HOST_PORT_ADDRESS>/health
+
+    or 
+
+    curl http://<HOST_PORT_ADDRESS>/health
+    ```
+    This should return a status of your application.
