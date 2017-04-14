@@ -35,5 +35,5 @@ spec:
       - "java-exec"
       from:
         kind: "ImageStreamTag"
-        name: "spring-boot-health-check:latest"
+        name: "${project.artifactId}:latest"
     type: "ImageChange"
