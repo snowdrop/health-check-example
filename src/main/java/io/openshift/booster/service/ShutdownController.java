@@ -17,26 +17,39 @@ package io.openshift.booster.service;
 
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.catalina.Context;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class ShutdownController {
+public class ShutdownController implements TomcatContextCustomizer {
 	private static Logger log = Logger.getLogger(ShutdownController.class.getName());
 
-	private ShutdownHealthIndicator shutdownHealthIndicator;
-
-	@Autowired
-	public ShutdownController(ShutdownHealthIndicator shutdownHealthIndicator) {
-		this.shutdownHealthIndicator = shutdownHealthIndicator;
-	}
+	private Context context;
 
 	@RequestMapping("/killme")
-	public void shutdown() {
-		log.info("Marked for shutdown ...");
-		shutdownHealthIndicator.shutdown();
+	public void shutdown() throws Exception {
+		log.info("Shutting down ...");
+		context.stop();
 	}
 
+	@Override
+	public void customize(Context context) {
+		this.context = context;
+	}
+
+	@Bean
+	public EmbeddedServletContainerCustomizer getContainerCustomizer() {
+		return configurableEmbeddedServletContainer -> {
+			if (configurableEmbeddedServletContainer instanceof TomcatEmbeddedServletContainerFactory) {
+				TomcatEmbeddedServletContainerFactory container = (TomcatEmbeddedServletContainerFactory) configurableEmbeddedServletContainer;
+				container.addContextCustomizers(ShutdownController.this);
+			}
+		};
+	}
 }

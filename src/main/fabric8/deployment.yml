@@ -1,0 +1,24 @@
+spec:
+  template:
+    spec:
+      containers:
+        - livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: "/api/health"
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 3
+            successThreashold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: "/api/health"
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreashold: 1
+            timeoutSeconds: 1
