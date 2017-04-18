@@ -18,9 +18,6 @@ package io.openshift.booster.service;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ExitCodeGenerator;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,17 +26,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShutdownController {
 	private static Logger log = Logger.getLogger(ShutdownController.class.getName());
 
-	private ApplicationContext context;
+	private ShutdownHealthIndicator shutdownHealthIndicator;
 
 	@Autowired
-	public ShutdownController(ApplicationContext context) {
-		this.context = context;
+	public ShutdownController(ShutdownHealthIndicator shutdownHealthIndicator) {
+		this.shutdownHealthIndicator = shutdownHealthIndicator;
 	}
 
 	@RequestMapping("/killme")
 	public void shutdown() {
-		log.info("Shutting down ...");
-		SpringApplication.exit(context, (ExitCodeGenerator) () -> 0);
+		log.info("Marked for shutdown ...");
+		shutdownHealthIndicator.shutdown();
 	}
 
 }

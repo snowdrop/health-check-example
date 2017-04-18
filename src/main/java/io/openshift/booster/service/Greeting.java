@@ -17,24 +17,17 @@ package io.openshift.booster.service;
 
 public class Greeting {
 
-    private final long id;
-    private final String content;
+	private final String content;
 
-    public Greeting() {
-        this.id = 0;
-        this.content = null;
-    }
+	public Greeting() {
+		this.content = null;
+	}
 
-    public Greeting(long id, String content) {
-        this.id = id;
-        this.content = content;
-    }
+	public Greeting(String content) {
+		this.content = content;
+	}
 
-    public long getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
+	public String getContent() {
+		return content;
+	}
 }
