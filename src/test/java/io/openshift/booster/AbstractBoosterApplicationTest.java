@@ -24,8 +24,11 @@ import static org.hamcrest.core.Is.is;
 import java.util.concurrent.TimeUnit;
 
 import com.jayway.restassured.RestAssured;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) // needed due to shutdown
 public abstract class AbstractBoosterApplicationTest {
 
 	@Test
@@ -59,7 +62,8 @@ public abstract class AbstractBoosterApplicationTest {
 		await().atMost(5, TimeUnit.MINUTES)
 			.until(() -> {
 				try {
-					return (get().statusCode() == 503);
+					int statusCode = get().statusCode();
+					return (statusCode != 200);
 				}
 				catch (Exception e) {
 					return false;

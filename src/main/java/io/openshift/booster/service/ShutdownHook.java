@@ -29,7 +29,14 @@ class TomcatShutdownHook implements ShutdownHook {
 	}
 
 	public void shutdown() throws Exception {
-		context.stop();
+		new Thread(() -> {
+			try {
+				context.stop();
+			}
+			catch (Exception e) {
+				throw new IllegalStateException(e);
+			}
+		}).start();
 	}
 }
 
