@@ -27,27 +27,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ShutdownController {
-	private static Logger log = Logger.getLogger(ShutdownController.class.getName());
+    private static Logger log = Logger.getLogger(ShutdownController.class.getName());
 
-	private ShutdownHook shutdownHook;
+    private ShutdownHook shutdownHook;
 
-	@RequestMapping("/killme")
-	public void shutdown() throws Exception {
-		log.info("Shutting down server ...");
-		shutdownHook.shutdown();
-	}
+    @RequestMapping("/killme")
+    public void shutdown() throws Exception {
+        log.info("Shutting down server ...");
+        shutdownHook.shutdown();
+    }
 
-	@Bean
-	public EmbeddedServletContainerCustomizer getContainerCustomizer() {
-		return container -> {
-			if (container instanceof TomcatEmbeddedServletContainerFactory) {
-				TomcatEmbeddedServletContainerFactory tcContainer = (TomcatEmbeddedServletContainerFactory) container;
-				tcContainer.addContextCustomizers((TomcatContextCustomizer) context -> ShutdownController.this.shutdownHook = new TomcatShutdownHook(context));
-			} else {
-				ShutdownController.this.shutdownHook = () -> {
-					System.exit(0); // TODO -- add other web servers support instead, if needed
-				};
-			}
-		};
-	}
+    @Bean
+    public EmbeddedServletContainerCustomizer getContainerCustomizer() {
+        return container -> {
+            if (container instanceof TomcatEmbeddedServletContainerFactory) {
+                TomcatEmbeddedServletContainerFactory tcContainer = (TomcatEmbeddedServletContainerFactory) container;
+                tcContainer.addContextCustomizers((TomcatContextCustomizer) context -> ShutdownController.this.shutdownHook = new TomcatShutdownHook(context));
+            } else {
+                ShutdownController.this.shutdownHook = () -> {
+                    System.exit(0); // TODO -- add other web servers support instead, if needed
+                };
+            }
+        };
+    }
 }

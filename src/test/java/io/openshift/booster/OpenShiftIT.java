@@ -17,39 +17,39 @@
 package io.openshift.booster;
 
 import static com.jayway.awaitility.Awaitility.await;
-import static com.jayway.restassured.RestAssured.get;
 
 import java.util.concurrent.TimeUnit;
 
-import com.jayway.restassured.response.Response;
 import io.openshift.booster.test.OpenShiftTestAssistant;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class OpenShiftIT extends AbstractBoosterApplicationTest {
 
-	private static OpenShiftTestAssistant assistant = new OpenShiftTestAssistant();
+    private static OpenShiftTestAssistant assistant = new OpenShiftTestAssistant();
 
-	@BeforeClass
-	public static void prepare() throws Exception {
-		assistant.deployApplication();
-		assistant.awaitApplicationReadinessOrFail();
+    @BeforeClass
+    public static void prepare() throws Exception {
+        assistant.deployApplication();
+        assistant.awaitApplicationReadinessOrFail();
 
-		await().atMost(5, TimeUnit.MINUTES)
-			.until(() -> {
-				try {
-					Response response = get();
-					return response.getStatusCode() < 500;
-				}
-				catch (Exception e) {
-					return false;
-				}
-			});
-	}
+        await().atMost(5, TimeUnit.MINUTES)
+                .until(AbstractBoosterApplicationTest::isAlive);
+    }
 
-	@AfterClass
-	public static void cleanup() {
-		assistant.cleanup();
-	}
+    @AfterClass
+    public static void cleanup() {
+        assistant.cleanup();
+    }
+
+    @Test
+    @Override
+    public void testKillMeEndpoint() {
+        super.testKillMeEndpoint();
+        // OpenShift should restart the application
+        await("Await for the application to restart").atMost(5, TimeUnit.MINUTES)
+                .until(AbstractBoosterApplicationTest::isAlive);
+    }
 
 }

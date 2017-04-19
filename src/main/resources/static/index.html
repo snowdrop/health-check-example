@@ -50,46 +50,46 @@
         crossorigin="anonymous"></script>
 
 <script>
-    var killTime;
-    var attempts;
+  var killTime;
+  var attempts;
 
-    function invokeService() {
-        var n = $("#name").val() || "World";
-        $.getJSON("/api/greeting?name=" + n, function (res) {
-            $("#greeting-result").html(JSON.stringify(res));
-        });
-    }
-
-    function invokeServiceandRetryUponFailures() {
-        var n = $("#name").val() || "World";
-        $.getJSON("/api/greeting?name=" + n, function (res) {
-            var rebirth = new Date();
-            var diff = (killTime.getTime() - rebirth.getTime()) / 1000;
-            var abs = Math.abs(diff);
-            $("#greeting-result").html(JSON.stringify(res) + " (the recovery took " + abs + " seconds)");
-        })
-                .fail(function () {
-                    $("#greeting-result").html("[" + ++attempts + "] Service not available... Retrying in 2 seconds");
-                    setTimeout(invokeServiceandRetryUponFailures, 2000);
-                });
-    }
-
-    $(document).ready(function () {
-        $("#invoke").click(function (e) {
-            invokeService();
-            e.preventDefault();
-        });
-
-        $("#kill").click(function (e) {
-            $.get( "/api/killme", function( data ) {
-                $("#greeting-result").html("The application has been killed...");
-                killTime = new Date();
-                attempts = 0;
-                setTimeout(invokeServiceandRetryUponFailures, 2000);
-            });
-            e.preventDefault();
-        });
+  function invokeService() {
+    var n = $("#name").val() || "World";
+    $.getJSON("/api/greeting?name=" + n, function (res) {
+      $("#greeting-result").html(JSON.stringify(res));
     });
+  }
+
+  function invokeServiceandRetryUponFailures() {
+    var n = $("#name").val() || "World";
+    $.getJSON("/api/greeting?name=" + n, function (res) {
+      var rebirth = new Date();
+      var diff = (killTime.getTime() - rebirth.getTime()) / 1000;
+      var abs = Math.abs(diff);
+      $("#greeting-result").html(JSON.stringify(res) + " (the recovery took " + abs + " seconds)");
+    })
+      .fail(function () {
+        $("#greeting-result").html("[" + ++attempts + "] Service not available... Retrying in 2 seconds");
+        setTimeout(invokeServiceandRetryUponFailures, 2000);
+      });
+  }
+
+  $(document).ready(function () {
+    $("#invoke").click(function (e) {
+      invokeService();
+      e.preventDefault();
+    });
+
+    $("#kill").click(function (e) {
+      $.get("/api/killme", function (data) {
+        $("#greeting-result").html("The application has been killed...");
+        killTime = new Date();
+        attempts = 0;
+        setTimeout(invokeServiceandRetryUponFailures, 2000);
+      });
+      e.preventDefault();
+    });
+  });
 </script>
 
 </body>

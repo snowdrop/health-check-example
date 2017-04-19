@@ -26,12 +26,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LocalTest extends AbstractBoosterApplicationTest {
 
-	@Value("${local.server.port}")
-	private int port;
+    @Value("${local.server.port}")
+    private int port;
 
-	@Before
-	public void beforeTest() {
-		RestAssured.baseURI = String.format("http://localhost:%d", port);
-	}
+    @Before
+    public void beforeTest() {
+        RestAssured.baseURI = String.format("http://localhost:%d", port);
+    }
 
 }
