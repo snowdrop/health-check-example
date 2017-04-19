@@ -17,7 +17,6 @@ package io.openshift.booster.service;
 
 import java.util.logging.Logger;
 
-import org.apache.catalina.Context;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
@@ -27,28 +26,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class ShutdownController implements TomcatContextCustomizer {
+public class ShutdownController {
 	private static Logger log = Logger.getLogger(ShutdownController.class.getName());
 
-	private Context context;
+	private ShutdownHook shutdownHook;
 
 	@RequestMapping("/killme")
 	public void shutdown() throws Exception {
-		log.info("Shutting down ...");
-		context.stop();
-	}
-
-	@Override
-	public void customize(Context context) {
-		this.context = context;
+		log.info("Shutting down server ...");
+		shutdownHook.shutdown();
 	}
 
 	@Bean
 	public EmbeddedServletContainerCustomizer getContainerCustomizer() {
-		return configurableEmbeddedServletContainer -> {
-			if (configurableEmbeddedServletContainer instanceof TomcatEmbeddedServletContainerFactory) {
-				TomcatEmbeddedServletContainerFactory container = (TomcatEmbeddedServletContainerFactory) configurableEmbeddedServletContainer;
-				container.addContextCustomizers(ShutdownController.this);
+		return container -> {
+			if (container instanceof TomcatEmbeddedServletContainerFactory) {
+				TomcatEmbeddedServletContainerFactory tcContainer = (TomcatEmbeddedServletContainerFactory) container;
+				tcContainer.addContextCustomizers((TomcatContextCustomizer) context -> ShutdownController.this.shutdownHook = new TomcatShutdownHook(context));
+			} else {
+				ShutdownController.this.shutdownHook = () -> {
+					System.exit(0); // TODO -- add other web servers support instead, if needed
+				};
 			}
 		};
 	}
