@@ -18,25 +18,24 @@ package io.openshift.booster.service;
 import org.apache.catalina.Context;
 
 interface ShutdownHook {
-	void shutdown() throws Exception;
+    void shutdown() throws Exception;
 }
 
 class TomcatShutdownHook implements ShutdownHook {
-	private Context context;
+    private Context context;
 
-	TomcatShutdownHook(Context context) {
-		this.context = context;
-	}
+    TomcatShutdownHook(Context context) {
+        this.context = context;
+    }
 
-	public void shutdown() throws Exception {
-		new Thread(() -> {
-			try {
-				context.stop();
-			}
-			catch (Exception e) {
-				throw new IllegalStateException(e);
-			}
-		}).start();
-	}
+    public void shutdown() throws Exception {
+        new Thread(() -> {
+            try {
+                context.stop();
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+        }).start();
+    }
 }
 

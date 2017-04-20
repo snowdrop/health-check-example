@@ -24,15 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class GreetingController {
 
-	private GreetingProperties properties;
+    private GreetingProperties properties;
 
-	@Autowired
-	public GreetingController(GreetingProperties properties) {
-		this.properties = properties;
-	}
+    @Autowired
+    public GreetingController(GreetingProperties properties) {
+        this.properties = properties;
+    }
 
-	@RequestMapping("/greeting")
-	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return new Greeting(String.format(properties.getMessage(), name));
-	}
+    @RequestMapping("/greeting")
+    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return new Greeting(String.format(properties.getMessage(), name));
+    }
 }

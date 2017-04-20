@@ -23,51 +23,46 @@ import static org.hamcrest.core.Is.is;
 
 import java.util.concurrent.TimeUnit;
 
-import com.jayway.restassured.RestAssured;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) // needed due to shutdown
+@FixMethodOrder(MethodSorters.NAME_ASCENDING) // When testing locally, application is not restarted, so execute kill test last
 public abstract class AbstractBoosterApplicationTest {
 
-	@Test
-	public void testGreetingEndpoint() {
-		RestAssured.basePath = "/api/greeting";
-		when().get()
-			.then()
-			.statusCode(200)
-			.body("content", is("Hello, World!"));
-	}
+    static boolean isAlive() {
+        try {
+            return get("/health").getStatusCode() == 200;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
-	@Test
-	public void testGreetingEndpointWithNameParameter() {
-		RestAssured.basePath = "/api/greeting";
-		given().param("name", "John")
-			.when()
-			.get()
-			.then()
-			.statusCode(200)
-			.body("content", is("Hello, John!"));
-	}
+    @Test
+    public void testGreetingEndpoint() {
+        when().get("/api/greeting")
+                .then()
+                .statusCode(200)
+                .body("content", is("Hello, World!"));
+    }
 
-	@Test
-	public void testShutdown() {
-		RestAssured.basePath = "/api/killme";
-		when().get()
-			.then()
-			.statusCode(200);
+    @Test
+    public void testGreetingEndpointWithNameParameter() {
+        given().param("name", "John")
+                .when()
+                .get("/api/greeting")
+                .then()
+                .statusCode(200)
+                .body("content", is("Hello, John!"));
+    }
 
-		RestAssured.basePath = "/health";
-		await().atMost(5, TimeUnit.MINUTES)
-			.until(() -> {
-				try {
-					int statusCode = get().statusCode();
-					return (statusCode != 200);
-				}
-				catch (Exception e) {
-					return false;
-				}
-			});
-	}
+    @Test
+    public void testKillMeEndpoint() {
+        when().get("/api/killme")
+                .then()
+                .statusCode(200);
+
+        await("Await for the application to die").atMost(5, TimeUnit.MINUTES)
+                .until(() -> !isAlive());
+    }
 }
