@@ -17,6 +17,8 @@
 package io.openshift.booster;
 
 import static com.jayway.awaitility.Awaitility.await;
+import static com.jayway.restassured.RestAssured.get;
+import static com.jayway.restassured.RestAssured.when;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +37,7 @@ public class OpenShiftIT extends AbstractBoosterApplicationTest {
         assistant.awaitApplicationReadinessOrFail();
 
         await().atMost(5, TimeUnit.MINUTES)
-                .until(AbstractBoosterApplicationTest::isAlive);
+                .until(OpenShiftIT::isAlive);
     }
 
     @AfterClass
@@ -44,12 +46,24 @@ public class OpenShiftIT extends AbstractBoosterApplicationTest {
     }
 
     @Test
-    @Override
     public void testKillMeEndpoint() {
-        super.testKillMeEndpoint();
-        // OpenShift should restart the application
+        when().get("/api/killme")
+                .then()
+                .statusCode(200);
+
+        await("Await for the application to die").atMost(5, TimeUnit.MINUTES)
+                .until(() -> !isAlive());
+
         await("Await for the application to restart").atMost(5, TimeUnit.MINUTES)
-                .until(AbstractBoosterApplicationTest::isAlive);
+                .until(OpenShiftIT::isAlive);
+    }
+
+    private static boolean isAlive() {
+        try {
+            return get("/health").getStatusCode() == 200;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
