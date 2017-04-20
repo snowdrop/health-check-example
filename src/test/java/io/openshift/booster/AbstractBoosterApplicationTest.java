@@ -15,28 +15,13 @@
  */
 package io.openshift.booster;
 
-import static com.jayway.awaitility.Awaitility.await;
-import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.when;
 import static org.hamcrest.core.Is.is;
 
-import java.util.concurrent.TimeUnit;
-
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) // When testing locally, application is not restarted, so execute kill test last
 public abstract class AbstractBoosterApplicationTest {
-
-    static boolean isAlive() {
-        try {
-            return get("/health").getStatusCode() == 200;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
     @Test
     public void testGreetingEndpoint() {
@@ -56,13 +41,4 @@ public abstract class AbstractBoosterApplicationTest {
                 .body("content", is("Hello, John!"));
     }
 
-    @Test
-    public void testKillMeEndpoint() {
-        when().get("/api/killme")
-                .then()
-                .statusCode(200);
-
-        await("Await for the application to die").atMost(5, TimeUnit.MINUTES)
-                .until(() -> !isAlive());
-    }
 }
