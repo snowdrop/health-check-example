@@ -25,7 +25,7 @@
 
   <groupId>io.openshift.booster</groupId>
   <artifactId>spring-boot-health-check</artifactId>
-  <version>2-SNAPSHOT</version>
+  <version>2</version>
 
   <name>Spring Boot - Health Check</name>
   <description>Spring Boot - Health Check</description>
