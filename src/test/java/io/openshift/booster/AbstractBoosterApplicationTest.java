@@ -19,6 +19,7 @@ import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.when;
 import static org.hamcrest.core.Is.is;
 
+import io.openshift.booster.service.GreetingProperties;
 import org.junit.Test;
 
 public abstract class AbstractBoosterApplicationTest {
@@ -28,7 +29,7 @@ public abstract class AbstractBoosterApplicationTest {
         when().get("/api/greeting")
                 .then()
                 .statusCode(200)
-                .body("content", is("Hello, World!"));
+                .body("content", is(String.format(getProperties().getMessage(), "World")));
     }
 
     @Test
@@ -38,7 +39,9 @@ public abstract class AbstractBoosterApplicationTest {
                 .get("/api/greeting")
                 .then()
                 .statusCode(200)
-                .body("content", is("Hello, John!"));
+                .body("content", is(String.format(getProperties().getMessage(), "John")));
     }
+
+    protected abstract GreetingProperties getProperties();
 
 }

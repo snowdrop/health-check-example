@@ -16,12 +16,14 @@
 package io.openshift.booster;
 
 import com.jayway.restassured.RestAssured;
+import io.openshift.booster.service.GreetingProperties;
 import io.openshift.booster.service.TomcatShutdown;
 import org.apache.catalina.Context;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -37,6 +39,9 @@ public class LocalTest extends AbstractBoosterApplicationTest {
 
     @Value("${local.server.port}")
     private int port;
+
+    @Autowired
+    private GreetingProperties properties;
 
     @MockBean
     private TomcatShutdown tomcatShutdown;
@@ -57,6 +62,10 @@ public class LocalTest extends AbstractBoosterApplicationTest {
                 .setContext(any(Context.class));
         inOrder.verify(tomcatShutdown)
                 .shutdown();
+    }
+
+    protected GreetingProperties getProperties() {
+        return properties;
     }
 
 }
