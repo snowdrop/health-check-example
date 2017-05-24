@@ -22,6 +22,7 @@ import static com.jayway.restassured.RestAssured.when;
 
 import java.util.concurrent.TimeUnit;
 
+import io.openshift.booster.service.GreetingProperties;
 import io.openshift.booster.test.OpenShiftTestAssistant;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -56,6 +57,10 @@ public class OpenShiftIT extends AbstractBoosterApplicationTest {
 
         await("Await for the application to restart").atMost(5, TimeUnit.MINUTES)
                 .until(OpenShiftIT::isAlive);
+    }
+
+    protected GreetingProperties getProperties() {
+        return new GreetingProperties();
     }
 
     private static boolean isAlive() {
