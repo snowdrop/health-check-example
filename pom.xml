@@ -32,38 +32,17 @@
 
   <properties>
     <springboot-version>1.4.1.RELEASE</springboot-version>
-    <tomcat.version>8.5.4</tomcat.version>
+    <spring-boot.bom.version>1</spring-boot.bom.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${springboot-version}</version>
+        <groupId>org.jboss.snowdrop</groupId>
+        <artifactId>spring-boot-parent</artifactId>
+        <version>${spring-boot.bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
-      </dependency>
-      <!-- Tomcat -->
-      <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-core</artifactId>
-        <version>${tomcat.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-el</artifactId>
-        <version>${tomcat.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-websocket</artifactId>
-        <version>${tomcat.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.tomcat</groupId>
-        <artifactId>tomcat-juli</artifactId>
-        <version>${tomcat.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -78,13 +57,18 @@
       <artifactId>spring-boot-actuator</artifactId>
     </dependency>
 
+    <!-- Apache Tomcat Dependency required -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-juli</artifactId>
+    </dependency>
+
     <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>
