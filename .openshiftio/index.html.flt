@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Health Check Mission - Spring Boot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div>
+        ${html}
+        
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="World">
+            </div>
+            <button id="invoke" type="submit" class="btn btn-success">Invoke</button>
+            <button id="kill" type="submit" class="btn btn-danger">Kill Me</button>
+        </form>
+
+        <h3>Result:</h3>
+        <pre><code id="greeting-result">Invoke the service to see the result.</code></pre>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>
+  var killTime;
+  var attempts;
+
+  function invokeService() {
+    var n = $("#name").val() || "World";
+    $.getJSON("/api/greeting?name=" + n, function (res) {
+      $("#greeting-result").html(JSON.stringify(res));
+    });
+  }
+
+  function invokeServiceandRetryUponFailures() {
+    var n = $("#name").val() || "World";
+    $.getJSON("/api/greeting?name=" + n, function (res) {
+      var rebirth = new Date();
+      var diff = (killTime.getTime() - rebirth.getTime()) / 1000;
+      var abs = Math.abs(diff);
+      $("#greeting-result").html(JSON.stringify(res) + " (the recovery took " + abs + " seconds)");
+    })
+      .fail(function () {
+        $("#greeting-result").html("[" + ++attempts + "] Service not available... Retrying in 2 seconds");
+        setTimeout(invokeServiceandRetryUponFailures, 2000);
+      });
+  }
+
+  $(document).ready(function () {
+    $("#invoke").click(function (e) {
+      invokeService();
+      e.preventDefault();
+    });
+
+    $("#kill").click(function (e) {
+      $.get("/api/killme", function (data) {
+        $("#greeting-result").html("The application has been killed...");
+        killTime = new Date();
+        attempts = 0;
+        setTimeout(invokeServiceandRetryUponFailures, 2000);
+      });
+      e.preventDefault();
+    });
+  });
+</script>
+
+</body>
+
+</html>
