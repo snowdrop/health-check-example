@@ -25,29 +25,21 @@
 
   <groupId>io.openshift.booster</groupId>
   <artifactId>spring-boot-health-check</artifactId>
-  <version>7-SNAPSHOT</version>
+  <version>7-redhat-SNAPSHOT</version>
 
   <name>Spring Boot - Health Check</name>
   <description>Spring Boot - Health Check</description>
 
   <properties>
     <springboot-version>1.4.1.RELEASE</springboot-version>
-    <spring-boot.bom.version>1.4.1.Beta1</spring-boot.bom.version>
+    <spring-boot.bom.version>2.0.0.redhat-77</spring-boot.bom.version>
   </properties>
-
-  <repositories>
-    <repository>
-      <id>redhat-thirdparty</id>
-      <name>RedHat Thirdparty Repository</name>
-      <url>https://repository.jboss.org/nexus/service/local/repositories/thirdparty-releases/content</url>
-    </repository>
-  </repositories>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>me.snowdrop</groupId>
-        <artifactId>spring-boot-bom</artifactId>
+        <groupId>org.jboss.snowdrop</groupId>
+        <artifactId>spring-boot-1.4-bom</artifactId>
         <version>${spring-boot.bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
