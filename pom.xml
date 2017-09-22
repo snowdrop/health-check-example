@@ -31,8 +31,8 @@
   <description>Spring Boot - Health Check</description>
 
   <properties>
-    <springboot-version>1.4.1.RELEASE</springboot-version>
-    <spring-boot.bom.version>1.4.1.Beta1</spring-boot.bom.version>
+    <springboot-version>1.5.7.RELEASE</springboot-version>
+    <spring-boot.bom.version>1.5.7-SNAPSHOT</spring-boot.bom.version>
   </properties>
 
   <repositories>
