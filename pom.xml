@@ -65,12 +65,6 @@
       <artifactId>spring-boot-actuator</artifactId>
     </dependency>
 
-    <!-- Apache Tomcat Dependency required -->
-    <dependency>
-      <groupId>org.apache.tomcat</groupId>
-      <artifactId>tomcat-juli</artifactId>
-    </dependency>
-
     <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
