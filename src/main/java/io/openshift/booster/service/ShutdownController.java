@@ -30,7 +30,7 @@ public class ShutdownController {
         this.tomcatShutdown = tomcatShutdown;
     }
 
-    @RequestMapping("/killme")
+    @RequestMapping("/stop")
     public void shutdown() throws Exception {
         tomcatShutdown.shutdown();
     }

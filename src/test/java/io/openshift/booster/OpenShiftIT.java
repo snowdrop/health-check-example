@@ -47,8 +47,8 @@ public class OpenShiftIT extends AbstractBoosterApplicationTest {
     }
 
     @Test
-    public void testKillMeEndpoint() {
-        when().get("/api/killme")
+    public void testStopServiceEndpoint() {
+        when().get("/api/stop")
                 .then()
                 .statusCode(200);
 

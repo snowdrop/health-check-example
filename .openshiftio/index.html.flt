@@ -20,7 +20,7 @@
                 <input type="text" class="form-control" id="name" placeholder="World">
             </div>
             <button id="invoke" type="submit" class="btn btn-success">Invoke</button>
-            <button id="kill" type="submit" class="btn btn-danger">Kill Me</button>
+            <button id="stop" type="submit" class="btn btn-danger">Stop Service</button>
         </form>
 
         <h3>Result:</h3>
@@ -34,7 +34,7 @@
         crossorigin="anonymous"></script>
 
 <script>
-  var killTime;
+  var stopTime;
   var attempts;
 
   function invokeService() {
@@ -48,7 +48,7 @@
     var n = $("#name").val() || "World";
     $.getJSON("/api/greeting?name=" + n, function (res) {
       var rebirth = new Date();
-      var diff = (killTime.getTime() - rebirth.getTime()) / 1000;
+      var diff = (stopTime.getTime() - rebirth.getTime()) / 1000;
       var abs = Math.abs(diff);
       $("#greeting-result").html(JSON.stringify(res) + " (the recovery took " + abs + " seconds)");
     })
@@ -64,10 +64,10 @@
       e.preventDefault();
     });
 
-    $("#kill").click(function (e) {
-      $.get("/api/killme", function (data) {
-        $("#greeting-result").html("The application has been killed...");
-        killTime = new Date();
+    $("#stop").click(function (e) {
+      $.get("/api/stop", function (data) {
+        $("#greeting-result").html("The application has been stopped...");
+        stopTime = new Date();
         attempts = 0;
         setTimeout(invokeServiceandRetryUponFailures, 2000);
       });
