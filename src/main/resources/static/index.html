@@ -22,7 +22,7 @@
             <p>To demonstrate this behavior, the application configures a <code>/health</code> HTTP endpoint, which is used by Kubernetes
               to issue HTTP requests. If the container is still alive—​which means the Health HTTP endpoint is able to reply—​the
               management platform will receive HTTP code 200 as a response, and no further action is taken. After you click the
-              <code>kill me</code> button, the HTTP endpoint stops returning a response, and the platform then restarts the pod
+              <code>Stop Service</code> button, the HTTP endpoint stops returning a response, and the platform then restarts the pod
               with the unresponsive container. While the pod is down, the booster UI polls the service periodically until the
               pod is restarted. In the meantime, do <strong>not</strong> refresh the page because it will not be served until
               the pod finishes restarting.</p>
@@ -39,7 +39,7 @@
                 <input type="text" class="form-control" id="name" placeholder="World">
             </div>
             <button id="invoke" type="submit" class="btn btn-success">Invoke</button>
-            <button id="kill" type="submit" class="btn btn-danger">Kill Me</button>
+            <button id="stop" type="submit" class="btn btn-danger">Stop Service</button>
         </form>
 
         <h3>Result:</h3>
@@ -53,7 +53,7 @@
         crossorigin="anonymous"></script>
 
 <script>
-  var killTime;
+  var stopTime;
   var attempts;
 
   function invokeService() {
@@ -67,7 +67,7 @@
     var n = $("#name").val() || "World";
     $.getJSON("/api/greeting?name=" + n, function (res) {
       var rebirth = new Date();
-      var diff = (killTime.getTime() - rebirth.getTime()) / 1000;
+      var diff = (stopTime.getTime() - rebirth.getTime()) / 1000;
       var abs = Math.abs(diff);
       $("#greeting-result").html(JSON.stringify(res) + " (the recovery took " + abs + " seconds)");
     })
@@ -83,10 +83,10 @@
       e.preventDefault();
     });
 
-    $("#kill").click(function (e) {
-      $.get("/api/killme", function (data) {
-        $("#greeting-result").html("The application has been killed...");
-        killTime = new Date();
+    $("#stop").click(function (e) {
+      $.get("/api/stop", function (data) {
+        $("#greeting-result").html("The application has been stopped...");
+        stopTime = new Date();
         attempts = 0;
         setTimeout(invokeServiceandRetryUponFailures, 2000);
       });
