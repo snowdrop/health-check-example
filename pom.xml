@@ -27,8 +27,8 @@
   <artifactId>spring-boot-health-check</artifactId>
   <version>10-SNAPSHOT</version>
 
-  <name>Spring Boot - Health Check</name>
-  <description>Spring Boot - Health Check</description>
+  <name>Spring Boot - Health Check Booster</name>
+  <description>Spring Boot - Health Check Booster</description>
 
   <properties>
     <spring-boot.bom.version>1.5.8.Final</spring-boot.bom.version>
