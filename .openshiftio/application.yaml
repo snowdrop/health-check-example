@@ -59,7 +59,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: spring-boot-health-check:9
+        name: spring-boot-health-check:10
     postCommit: {}
     resources: {}
     source:
@@ -109,7 +109,7 @@ objects:
       expose: "true"
       app: spring-boot-health-check
       provider: fabric8
-      version: "9"
+      version: "10"
       group: io.openshift.booster
     name: spring-boot-health-check
   spec:
@@ -126,7 +126,7 @@ objects:
   kind: DeploymentConfig
   metadata:
     annotations:
-      fabric8.io/metrics-path: dashboard/file/kubernetes-pods.json/?var-project=spring-boot-health-check&var-version=9
+      fabric8.io/metrics-path: dashboard/file/kubernetes-pods.json/?var-project=spring-boot-health-check&var-version=10
       fabric8.io/scm-con-url: scm:git:https://github.com/openshiftio/booster-parent.git/spring-boot-health-check
       fabric8.io/scm-url: https://github.com/openshiftio/spring-boot-health-check
       fabric8.io/iconUrl: img/icons/spring-boot.svg
@@ -136,7 +136,7 @@ objects:
     labels:
       app: spring-boot-health-check
       provider: fabric8
-      version: "9"
+      version: "10"
       group: io.openshift.booster
     name: spring-boot-health-check
   spec:
@@ -153,7 +153,7 @@ objects:
     template:
       metadata:
         annotations:
-          fabric8.io/metrics-path: dashboard/file/kubernetes-pods.json/?var-project=spring-boot-health-check&var-version=9
+          fabric8.io/metrics-path: dashboard/file/kubernetes-pods.json/?var-project=spring-boot-health-check&var-version=10
           fabric8.io/scm-con-url: scm:git:https://github.com/openshiftio/booster-parent.git/spring-boot-health-check
           fabric8.io/scm-url: https://github.com/openshiftio/spring-boot-health-check
           fabric8.io/iconUrl: img/icons/spring-boot.svg
@@ -163,7 +163,7 @@ objects:
         labels:
           app: spring-boot-health-check
           provider: fabric8
-          version: "9"
+          version: "10"
           group: io.openshift.booster
       spec:
         containers:
@@ -172,7 +172,7 @@ objects:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: spring-boot-health-check:9
+          image: spring-boot-health-check:10
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 2
@@ -213,7 +213,7 @@ objects:
         - spring-boot
         from:
           kind: ImageStreamTag
-          name: spring-boot-health-check:9
+          name: spring-boot-health-check:10
       type: ImageChange
 - apiVersion: v1
   kind: Route
@@ -221,7 +221,7 @@ objects:
     labels:
       app: spring-boot-health-check
       provider: fabric8
-      version: "9"
+      version: "10"
       group: io.openshift.booster
     name: spring-boot-health-check
   spec:
