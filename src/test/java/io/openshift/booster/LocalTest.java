@@ -48,12 +48,12 @@ public class LocalTest extends AbstractBoosterApplicationTest {
 
     @Before
     public void beforeTest() {
-        RestAssured.baseURI = String.format("http://localhost:%d", port);
+        RestAssured.baseURI = String.format("http://localhost:%d/", port);
     }
 
     @Test
     public void testStopServiceEndpoint() {
-        when().get("/api/stop")
+        when().get("api/stop")
                 .then()
                 .statusCode(200);
 

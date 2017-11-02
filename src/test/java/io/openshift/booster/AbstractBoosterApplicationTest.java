@@ -26,7 +26,7 @@ public abstract class AbstractBoosterApplicationTest {
 
     @Test
     public void testGreetingEndpoint() {
-        when().get("/api/greeting")
+        when().get("api/greeting")
                 .then()
                 .statusCode(200)
                 .body("content", is(String.format(getProperties().getMessage(), "World")));
@@ -36,7 +36,7 @@ public abstract class AbstractBoosterApplicationTest {
     public void testGreetingEndpointWithNameParameter() {
         given().param("name", "John")
                 .when()
-                .get("/api/greeting")
+                .get("api/greeting")
                 .then()
                 .statusCode(200)
                 .body("content", is(String.format(getProperties().getMessage(), "John")));

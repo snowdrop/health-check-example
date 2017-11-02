@@ -20,35 +20,31 @@ import static com.jayway.awaitility.Awaitility.await;
 import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.when;
 
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import com.jayway.restassured.RestAssured;
 import io.openshift.booster.service.GreetingProperties;
-import io.openshift.booster.test.OpenShiftTestAssistant;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.arquillian.cube.openshift.impl.enricher.RouteURL;
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(Arquillian.class)
 public class OpenShiftIT extends AbstractBoosterApplicationTest {
 
-    private static OpenShiftTestAssistant assistant = new OpenShiftTestAssistant();
+    @RouteURL("spring-boot-health-check")
+    private URL baseURL;
 
-    @BeforeClass
-    public static void prepare() throws Exception {
-        assistant.deployApplication();
-        assistant.awaitApplicationReadinessOrFail();
-
-        await().atMost(5, TimeUnit.MINUTES)
-                .until(OpenShiftIT::isAlive);
-    }
-
-    @AfterClass
-    public static void cleanup() {
-        assistant.cleanup();
+    @Before
+    public void setup() {
+        RestAssured.baseURI = baseURL.toExternalForm();
     }
 
     @Test
     public void testStopServiceEndpoint() {
-        when().get("/api/stop")
+        when().get("api/stop")
                 .then()
                 .statusCode(200);
 
@@ -65,7 +61,7 @@ public class OpenShiftIT extends AbstractBoosterApplicationTest {
 
     private static boolean isAlive() {
         try {
-            return get("/health").getStatusCode() == 200;
+            return get("health").getStatusCode() == 200;
         } catch (Exception e) {
             return false;
         }
