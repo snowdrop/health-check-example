@@ -27,8 +27,8 @@
   <artifactId>spring-boot-health-check</artifactId>
   <version>5-redhat-SNAPSHOT</version>
 
-  <name>Spring Boot - Health Check</name>
-  <description>Spring Boot - Health Check</description>
+  <name>Spring Boot - Health Check Booster</name>
+  <description>Spring Boot - Health Check Booster</description>
 
   <properties>
     <springboot-version>1.5.8.RELEASE</springboot-version>
