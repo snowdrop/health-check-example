@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class OpenShiftIT extends AbstractBoosterApplicationTest {
 
-    @RouteURL("spring-boot-health-check")
+    @RouteURL("${app.name}")
     private URL baseURL;
 
     @Before
