@@ -20,11 +20,11 @@
   <parent>
     <groupId>io.openshift.booster</groupId>
     <artifactId>spring-boot-booster-parent</artifactId>
-    <version>1.5.10-10</version>
+    <version>1.5.10-1-rhoar</version>
   </parent>
 
   <artifactId>spring-boot-health-check</artifactId>
-  <version>12-SNAPSHOT</version>
+  <version>1.5.10-1-redhat-SNAPSHOT</version>
 
   <name>Spring Boot - Health Check Booster</name>
   <description>Spring Boot - Health Check Booster</description>
