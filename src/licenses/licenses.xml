@@ -683,7 +683,7 @@
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-api</artifactId>
-            <version>1.13.0</version>
+            <version>1.15.1</version>
             <licenses>
                 <license>
                     <name>Apache License 2.0</name>
@@ -694,7 +694,7 @@
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-core</artifactId>
-            <version>1.13.0</version>
+            <version>1.15.1</version>
             <licenses>
                 <license>
                     <name>Apache License 2.0</name>
@@ -705,7 +705,7 @@
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-kubernetes</artifactId>
-            <version>1.13.0</version>
+            <version>1.15.1</version>
             <licenses>
                 <license>
                     <name>Apache License 2.0</name>
@@ -716,7 +716,7 @@
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-openshift</artifactId>
-            <version>1.13.0</version>
+            <version>1.15.1</version>
             <licenses>
                 <license>
                     <name>Apache License 2.0</name>
@@ -727,7 +727,18 @@
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-openshift-api</artifactId>
-            <version>1.13.0</version>
+            <version>1.15.1</version>
+            <licenses>
+                <license>
+                    <name>Apache License 2.0</name>
+                    <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+                </license>
+            </licenses>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.cube</groupId>
+            <artifactId>arquillian-cube-requirement-spi</artifactId>
+            <version>1.15.1</version>
             <licenses>
                 <license>
                     <name>Apache License 2.0</name>
@@ -738,7 +749,7 @@
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-spi</artifactId>
-            <version>1.13.0</version>
+            <version>1.15.1</version>
             <licenses>
                 <license>
                     <name>Apache License 2.0</name>
