@@ -24,7 +24,7 @@
   </parent>
 
   <artifactId>spring-boot-health-check</artifactId>
-  <version>1.5.13-1</version>
+  <version>1.5.13-2-SNAPSHOT</version>
 
   <name>Spring Boot - Health Check Booster</name>
   <description>Spring Boot - Health Check Booster</description>
