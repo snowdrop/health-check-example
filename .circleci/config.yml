@@ -63,6 +63,7 @@ jobs:
 
             echo "SOURCE_REPOSITORY_URL = ${SOURCE_REPOSITORY_URL}"
             echo "SOURCE_REPOSITORY_REF = ${SOURCE_REPOSITORY_REF}"
+            jq --version
 
 workflows:
   version: 2
