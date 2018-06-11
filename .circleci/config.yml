@@ -47,18 +47,23 @@ jobs:
             - ~/.m2
           key: spring-boot-health-booster-{{ .Branch }}-{{ checksum "pom.xml" }}
 
-#      - run:
-#          name: run tests against fmp build
-#          command:  |
-#            oc new-project fmp
-#            ./mvnw clean verify -Popenshift,openshift-it
-#          no_output_timeout: 3600
-#
-#      - run:
-#          name: Cleanup fmp build
-#          command: |
-#            ./mvnw fabric8:undeploy -Popenshift
-#            oc delete project fmp
+      - run:
+          name: run tests against fmp build
+          command:  |
+            oc new-project fmp
+            ./mvnw clean verify -Popenshift,openshift-it
+          no_output_timeout: 3600
+
+      # Take cluster down and bring it back up. This ensures that the next deployment place in a clean environment
+      - run:
+          name: Restart cluster
+          command: |
+            oc cluster down
+            sleep 10
+            oc cluster up --version=v3.9.0
+            sleep 10
+            oc login -u system:admin
+            echo "Recreated Openshift cluster"
 
       - run:
           name: run tests against s2i build
