@@ -47,18 +47,18 @@ jobs:
             - ~/.m2
           key: spring-boot-health-booster-{{ .Branch }}-{{ checksum "pom.xml" }}
 
-      - run:
-          name: run tests against fmp build
-          command:  |
-            oc new-project fmp
-            ./mvnw clean verify -Popenshift,openshift-it
-          no_output_timeout: 3600
-
-      - run:
-          name: Cleanup fmp build
-          command: |
-            ./mvnw fabric8:undeploy -Popenshift
-            oc delete project fmp
+#      - run:
+#          name: run tests against fmp build
+#          command:  |
+#            oc new-project fmp
+#            ./mvnw clean verify -Popenshift,openshift-it
+#          no_output_timeout: 3600
+#
+#      - run:
+#          name: Cleanup fmp build
+#          command: |
+#            ./mvnw fabric8:undeploy -Popenshift
+#            oc delete project fmp
 
       - run:
           name: run tests against s2i build
