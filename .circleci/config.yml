@@ -31,34 +31,34 @@ jobs:
             sleep 10
             oc login -u system:admin
             echo "Configured OpenShift cluster : v3.9.0"
-#
-#      # based on this: https://discuss.circleci.com/t/circle-2-0-caching-is-too-limited-to-be-very-useful/11694/10
-#      - restore_cache:
-#          key: spring-boot-health-booster-{{ .Branch }}-{{ checksum "pom.xml" }}
-#          key: spring-boot-health-booster-{{ .Branch }}
-#          key: spring-boot-health-booster
-#
-#      # Will download all deps needed into .m2
-#      - run: ./mvnw dependency:go-offline
-#
-#
-#      - save_cache:
-#          paths:
-#            - ~/.m2
-#          key: spring-boot-health-booster-{{ .Branch }}-{{ checksum "pom.xml" }}
-#
-#      - run:
-#          name: run tests against fmp build
-#          command:  |
-#            oc new-project fmp
-#            ./mvnw clean verify -Popenshift,openshift-it
-#          no_output_timeout: 3600
-#
-#      - run:
-#          name: Cleanup fmp build
-#          command: |
-#            ./mvnw fabric8:undeploy -Popenshift
-#            oc delete project fmp
+
+      # based on this: https://discuss.circleci.com/t/circle-2-0-caching-is-too-limited-to-be-very-useful/11694/10
+      - restore_cache:
+          key: spring-boot-health-booster-{{ .Branch }}-{{ checksum "pom.xml" }}
+          key: spring-boot-health-booster-{{ .Branch }}
+          key: spring-boot-health-booster
+
+      # Will download all deps needed into .m2
+      - run: ./mvnw dependency:go-offline
+
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: spring-boot-health-booster-{{ .Branch }}-{{ checksum "pom.xml" }}
+
+      - run:
+          name: run tests against fmp build
+          command:  |
+            oc new-project fmp
+            ./mvnw clean verify -Popenshift,openshift-it
+          no_output_timeout: 3600
+
+      - run:
+          name: Cleanup fmp build
+          command: |
+            ./mvnw fabric8:undeploy -Popenshift
+            oc delete project fmp
 
       - run:
           name: run tests against s2i build
