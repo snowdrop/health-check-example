@@ -15,9 +15,9 @@
  */
 package io.openshift.booster;
 
-import com.jayway.restassured.RestAssured;
 import io.openshift.booster.service.GreetingProperties;
 import io.openshift.booster.service.TomcatShutdown;
+import io.restassured.RestAssured;
 import org.apache.catalina.Context;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.jayway.restassured.RestAssured.when;
+import static io.restassured.RestAssured.when;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.inOrder;
 
