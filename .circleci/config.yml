@@ -39,7 +39,7 @@ jobs:
           key: spring-boot-health-booster
 
       # Will download all deps needed into .m2
-      - run: ./mvnw dependency:go-offline
+      - run: ./mvnw -s .circleci/settings.xml dependency:go-offline
 
 
       - save_cache:
@@ -69,7 +69,7 @@ jobs:
             timeout 300s bash -c 'while [[ $(oc get pod -o json | jq  ".items[] | select(.metadata.name | contains(\"build\"))  | .status  " | jq -rs "sort_by(.startTme) | last | .phase") == "Running" ]]; do sleep 20; done; echo ""'
 
             # launch the tests without deploying the application
-            ./mvnw verify -Dfabric8.skip=true -Popenshift,openshift-it
+            ./mvnw -s .circleci/settings.xml verify -Dfabric8.skip=true -Popenshift,openshift-it
 
       - run:
           name: Cleanup s2i build
@@ -84,7 +84,7 @@ jobs:
           name: run tests against fmp build
           command:  |
             oc new-project fmp
-            ./mvnw clean verify -Popenshift,openshift-it
+            ./mvnw -s .circleci/settings.xml clean verify -Popenshift,openshift-it
           no_output_timeout: 3600
 
 
