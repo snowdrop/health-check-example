@@ -15,8 +15,8 @@
  */
 package io.openshift.booster;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.when;
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.Is.is;
 
 import io.openshift.booster.service.GreetingProperties;
