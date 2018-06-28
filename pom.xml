@@ -14,22 +14,18 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.openshift</groupId>
     <artifactId>booster-parent</artifactId>
     <version>22</version>
   </parent>
-
   <groupId>io.openshift.booster</groupId>
   <artifactId>spring-boot-health-check</artifactId>
   <version>1.5.14-1-SNAPSHOT</version>
-
   <name>Spring Boot - Health Check Booster</name>
   <description>Spring Boot - Health Check Booster</description>
-
   <properties>
     <arquillian.version>1.4.0.Final</arquillian.version>
     <awaitility.version>3.1.0</awaitility.version>
@@ -37,12 +33,10 @@
     <rest-assured.version>3.1.0</rest-assured.version>
     <spring-boot.version>1.5.14.RELEASE</spring-boot.version>
     <spring-boot-bom.version>1.5.14.Final</spring-boot-bom.version>
-
     <fabric8.generator.from>
       registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:${openjdk18-openshift.version}
     </fabric8.generator.from>
   </properties>
-
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -51,7 +45,6 @@
       <comments>A business-friendly OSS license</comments>
     </license>
   </licenses>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -80,7 +73,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -132,7 +124,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <resources>
       <resource>
@@ -159,9 +150,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <classifier>exec</classifier>
-        </configuration>
+        <configuration/>
         <executions>
           <execution>
             <goals>
@@ -172,7 +161,6 @@
       </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>openshift-it</id>
@@ -185,6 +173,7 @@
               <systemPropertyVariables>
                 <app.name>${project.artifactId}</app.name>
               </systemPropertyVariables>
+              <classesDirectory>${project.build.directory}/${artifactId}.jar.original</classesDirectory>
             </configuration>
             <executions>
               <execution>
