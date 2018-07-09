@@ -15,11 +15,13 @@
  */
 package io.openshift.booster;
 
+import static io.restassured.RestAssured.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.inOrder;
+
 import io.openshift.booster.service.GreetingProperties;
 import io.openshift.booster.service.TomcatShutdown;
-import io.restassured.RestAssured;
 import org.apache.catalina.Context;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -28,10 +30,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static io.restassured.RestAssured.when;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.inOrder;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -46,16 +44,13 @@ public class LocalTest extends AbstractBoosterApplicationTest {
     @MockBean
     private TomcatShutdown tomcatShutdown;
 
-    @Before
-    public void beforeTest() {
-        RestAssured.baseURI = String.format("http://localhost:%d/", port);
-    }
-
     @Test
     public void testStopServiceEndpoint() {
-        when().get("api/stop")
-                .then()
-                .statusCode(200);
+        given()
+            .baseUri(baseURI())
+            .get("api/stop")
+            .then()
+            .statusCode(200);
 
         InOrder inOrder = inOrder(tomcatShutdown);
         inOrder.verify(tomcatShutdown)
@@ -64,8 +59,14 @@ public class LocalTest extends AbstractBoosterApplicationTest {
                 .shutdown();
     }
 
+    @Override
     protected GreetingProperties getProperties() {
         return properties;
+    }
+
+    @Override
+    protected String baseURI() {
+        return String.format("http://localhost:%d/", port);
     }
 
 }

@@ -16,7 +16,6 @@
 package io.openshift.booster;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.Is.is;
 
 import io.openshift.booster.service.GreetingProperties;
@@ -24,24 +23,31 @@ import org.junit.Test;
 
 public abstract class AbstractBoosterApplicationTest {
 
+    private static final String GREETING_PATH = "api/greeting";
+
     @Test
     public void testGreetingEndpoint() {
-        when().get("api/greeting")
-                .then()
-                .statusCode(200)
-                .body("content", is(String.format(getProperties().getMessage(), "World")));
+        given()
+           .baseUri(baseURI())
+           .get(GREETING_PATH)
+           .then()
+           .statusCode(200)
+           .body("content", is(String.format(getProperties().getMessage(), "World")));
     }
 
     @Test
     public void testGreetingEndpointWithNameParameter() {
-        given().param("name", "John")
-                .when()
-                .get("api/greeting")
-                .then()
-                .statusCode(200)
-                .body("content", is(String.format(getProperties().getMessage(), "John")));
+        given()
+           .baseUri(baseURI())
+           .param("name", "John")
+           .when()
+           .get(GREETING_PATH)
+           .then()
+           .statusCode(200)
+           .body("content", is(String.format(getProperties().getMessage(), "John")));
     }
 
     protected abstract GreetingProperties getProperties();
 
+    protected abstract String baseURI();
 }

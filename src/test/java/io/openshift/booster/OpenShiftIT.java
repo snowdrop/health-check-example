@@ -16,21 +16,17 @@
 
 package io.openshift.booster;
 
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
+import static io.restassured.RestAssured.given;
+import static org.awaitility.Awaitility.await;
 
 import io.openshift.booster.service.GreetingProperties;
-import io.restassured.RestAssured;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import org.arquillian.cube.openshift.impl.enricher.AwaitRoute;
 import org.arquillian.cube.openshift.impl.enricher.RouteURL;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.when;
-import static org.awaitility.Awaitility.await;
 
 @RunWith(Arquillian.class)
 public class OpenShiftIT extends AbstractBoosterApplicationTest {
@@ -39,31 +35,34 @@ public class OpenShiftIT extends AbstractBoosterApplicationTest {
     @RouteURL("${app.name}")
     private URL baseURL;
 
-    @Before
-    public void setup() {
-        RestAssured.baseURI = baseURL.toExternalForm();
-    }
-
     @Test
     public void testStopServiceEndpoint() {
-        when().get("api/stop")
-                .then()
-                .statusCode(200);
+        given()
+           .baseUri(baseURI())
+           .get("api/stop")
+           .then()
+           .statusCode(200);
 
         await("Await for the application to die").atMost(5, TimeUnit.MINUTES)
                 .until(() -> !isAlive());
 
         await("Await for the application to restart").atMost(5, TimeUnit.MINUTES)
-                .until(OpenShiftIT::isAlive);
+                .until(this::isAlive);
     }
 
+    @Override
     protected GreetingProperties getProperties() {
         return new GreetingProperties();
     }
 
-    private static boolean isAlive() {
+    @Override
+    protected String baseURI() {
+        return baseURL.toString();
+    }
+
+    private boolean isAlive() {
         try {
-            return get("health").getStatusCode() == 200;
+            return given().baseUri(baseURI()).get("health").getStatusCode() == 200;
         } catch (Exception e) {
             return false;
         }
