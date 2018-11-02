@@ -12,6 +12,14 @@ metadata:
       When you deploy an application, its important to know if it is available and if it can start handling incoming requests. Implementing the health check pattern allows you to monitor the health of an application,
       which includes if an application is available and whether it is able to service requests.
 parameters:
+- name: SUFFIX_NAME
+  description: The suffix name for the template objects
+  displayName: Suffix name
+  value: ''
+- name: RELEASE_VERSION
+  description: The release version number of application
+  displayName: Release version
+  value: 1.0.0
 - name: RUNTIME_VERSION
   displayName: OpenJDK 8 image version to use
   description: Specifies which version of the OpenShift OpenJDK 8 image to use
@@ -50,7 +58,9 @@ objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: spring-boot-health-check
+    name: spring-boot-health-check${SUFFIX_NAME}
+    labels:
+      version: ${RELEASE_VERSION}
   spec: {}
 - apiVersion: v1
   kind: ImageStream
@@ -58,19 +68,21 @@ objects:
     name: runtime
   spec:
     tags:
-    - name: "${RUNTIME_VERSION}"
+    - name: "latest"
       from:
         kind: DockerImage
-        name: registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:${RUNTIME_VERSION}
+        name: registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: spring-boot-health-check
+    name: spring-boot-health-check-s2i${SUFFIX_NAME}
+    labels:
+      version: ${RELEASE_VERSION}
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: spring-boot-health-check:BOOSTER_VERSION
+        name: 'spring-boot-health-check${SUFFIX_NAME}:${RELEASE_VERSION}'
     postCommit: {}
     resources: {}
     source:
@@ -82,7 +94,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: runtime:${RUNTIME_VERSION}
+          name: 'runtime:latest'
         incremental: true
         env:
         - name: MAVEN_ARGS_APPEND
@@ -107,11 +119,12 @@ objects:
   kind: Service
   metadata:
     labels:
+      expose: "true"
       app: spring-boot-health-check
       provider: snowdrop
-      version: "BOOSTER_VERSION"
+      version: ${RELEASE_VERSION}
       group: io.openshift.booster
-    name: spring-boot-health-check
+    name: spring-boot-health-check${SUFFIX_NAME}
   spec:
     ports:
     - name: http
@@ -128,9 +141,9 @@ objects:
     labels:
       app: spring-boot-health-check
       provider: snowdrop
-      version: "BOOSTER_VERSION"
+      version: ${RELEASE_VERSION}
       group: io.openshift.booster
-    name: spring-boot-health-check
+    name: spring-boot-health-check${SUFFIX_NAME}
   spec:
     replicas: 1
     revisionHistoryLimit: 2
@@ -147,7 +160,7 @@ objects:
         labels:
           app: spring-boot-health-check
           provider: snowdrop
-          version: "BOOSTER_VERSION"
+          version: ${RELEASE_VERSION}
           group: io.openshift.booster
       spec:
         containers:
@@ -156,7 +169,7 @@ objects:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: spring-boot-health-check:BOOSTER_VERSION
+          image: ""
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 2
@@ -197,7 +210,7 @@ objects:
         - spring-boot
         from:
           kind: ImageStreamTag
-          name: spring-boot-health-check:BOOSTER_VERSION
+          name: 'spring-boot-health-check${SUFFIX_NAME}:${RELEASE_VERSION}'
       type: ImageChange
 - apiVersion: v1
   kind: Route
@@ -205,12 +218,12 @@ objects:
     labels:
       app: spring-boot-health-check
       provider: snowdrop
-      version: "BOOSTER_VERSION"
+      version: ${RELEASE_VERSION}
       group: io.openshift.booster
-    name: spring-boot-health-check
+    name: spring-boot-health-check${SUFFIX_NAME}
   spec:
     port:
       targetPort: 8080
     to:
       kind: Service
-      name: spring-boot-health-check
+      name: spring-boot-health-check${SUFFIX_NAME}
