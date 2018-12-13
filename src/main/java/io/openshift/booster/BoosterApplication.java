@@ -18,8 +18,8 @@ package io.openshift.booster;
 import io.openshift.booster.service.TomcatShutdown;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
@@ -32,12 +32,8 @@ public class BoosterApplication {
     // Customize servlet container so that we could stop Tomcat when requested.
 
     @Bean
-    public EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer(TomcatShutdown tomcatShutdown) {
-        return container -> {
-            if (container instanceof TomcatEmbeddedServletContainerFactory) {
-                ((TomcatEmbeddedServletContainerFactory) container).addContextCustomizers(tomcatShutdown::setContext);
-            }
-        };
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> embeddedServletContainerCustomizer(TomcatShutdown tomcatShutdown) {
+        return container -> container.addContextCustomizers(tomcatShutdown::setContext);
     }
 
     @Bean
