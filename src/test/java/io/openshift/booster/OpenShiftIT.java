@@ -62,7 +62,7 @@ public class OpenShiftIT extends AbstractBoosterApplicationTest {
 
     private boolean isAlive() {
         try {
-            return given().baseUri(baseURI()).get("health").getStatusCode() == 200;
+            return given().baseUri(baseURI()).get("/actuator/health").getStatusCode() == 200;
         } catch (Exception e) {
             return false;
         }
