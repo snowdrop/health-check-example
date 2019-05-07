@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package io.openshift.booster;
+package dev.snowdrop.example;
 
 import static io.restassured.RestAssured.given;
 import static org.awaitility.Awaitility.await;
 
-import io.openshift.booster.service.GreetingProperties;
+import dev.snowdrop.example.service.GreetingProperties;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import org.arquillian.cube.openshift.impl.enricher.AwaitRoute;
@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class OpenShiftIT extends AbstractBoosterApplicationTest {
+public class OpenShiftIT extends AbstractExampleApplicationTest {
 
     @AwaitRoute(path = "/health")
     @RouteURL("${app.name}")

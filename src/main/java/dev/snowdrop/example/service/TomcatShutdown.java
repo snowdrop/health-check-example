@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.openshift.booster.service;
+package dev.snowdrop.example.service;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
