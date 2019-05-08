@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.openshift.booster.service;
+package dev.snowdrop.example.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+public class Greeting {
 
-@RestController
-@RequestMapping("/api")
-public class ShutdownController {
+    private final String content;
 
-    private final TomcatShutdown tomcatShutdown;
-
-    @Autowired
-    public ShutdownController(TomcatShutdown tomcatShutdown) {
-        this.tomcatShutdown = tomcatShutdown;
+    public Greeting() {
+        this.content = null;
     }
 
-    @RequestMapping("/stop")
-    public void shutdown() throws Exception {
-        tomcatShutdown.shutdown();
+    public Greeting(String content) {
+        this.content = content;
     }
 
+    public String getContent() {
+        return content;
+    }
 }

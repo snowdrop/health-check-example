@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.openshift.booster;
+package dev.snowdrop.example;
 
 import static io.restassured.RestAssured.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.inOrder;
 
-import io.openshift.booster.service.GreetingProperties;
-import io.openshift.booster.service.TomcatShutdown;
+import dev.snowdrop.example.service.GreetingProperties;
+import dev.snowdrop.example.service.TomcatShutdown;
 import org.apache.catalina.Context;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +33,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LocalTest extends AbstractBoosterApplicationTest {
+public class LocalTest extends AbstractExampleApplicationTest {
 
     @Value("${local.server.port}")
     private int port;

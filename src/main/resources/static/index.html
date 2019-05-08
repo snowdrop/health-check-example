@@ -13,7 +13,7 @@
 
     <div>
       <div class="sect1">
-        <h2 id="_health_check_booster">Health Check Booster</h2>
+        <h2 id="_health_check_booster">Health Check Example</h2>
         <div class="sectionbody">
           <div class="paragraph">
             <p>Demonstrates how the Kubernetes health checks work to determine if a container is still alive (the <em>liveness</em>          of the container) and ready to serve the traffic for the HTTP endpoints of the application (the <em>readiness</em>          of the container).</p>
@@ -23,7 +23,7 @@
               to issue HTTP requests. If the container is still alive—​which means the Health HTTP endpoint is able to reply—​the
               management platform will receive HTTP code 200 as a response, and no further action is taken. After you click the
               <code>Stop Service</code> button, the HTTP endpoint stops returning a response, and the platform then restarts the pod
-              with the unresponsive container. While the pod is down, the booster UI polls the service periodically until the
+              with the unresponsive container. While the pod is down, the example UI polls the service periodically until the
               pod is restarted. In the meantime, do <strong>not</strong> refresh the page because it will not be served until
               the pod finishes restarting.</p>
           </div>
