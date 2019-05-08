@@ -21,11 +21,11 @@
     <artifactId>booster-parent</artifactId>
     <version>23</version>
   </parent>
-  <groupId>io.openshift.booster</groupId>
-  <artifactId>spring-boot-health-check</artifactId>
+  <groupId>dev.snowdrop.example</groupId>
+  <artifactId>health-check</artifactId>
   <version>1.5.19-3-SNAPSHOT</version>
-  <name>Spring Boot - Health Check Booster</name>
-  <description>Spring Boot - Health Check Booster</description>
+  <name>Spring Boot - Health Check Example</name>
+  <description>Spring Boot - Health Check Example</description>
   <properties>
     <arquillian.version>1.4.0.Final</arquillian.version>
     <awaitility.version>3.1.0</awaitility.version>
