@@ -32,7 +32,7 @@ public class GreetingController {
     }
 
     @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public Greeting greeting(@RequestParam(value = "name", defaultValue = "JavaZone") String name) {
         return new Greeting(String.format(properties.getMessage(), name));
     }
 }
