@@ -18,7 +18,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>dev.snowdrop.example</groupId>
   <artifactId>health-check</artifactId>
-  <version>2.1.6-9-SNAPSHOT</version>
+  <version>2.1.6-9-redhat</version>
   <name>Spring Boot - Health Check Example</name>
   <description>Spring Boot - Health Check Example</description>
   <properties>
@@ -31,7 +31,7 @@
     <openjdk18-openshift.version>latest</openjdk18-openshift.version>
     <rest-assured.version>3.1.0</rest-assured.version>
     <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
-    <spring-boot-bom.version>2.1.6.Final</spring-boot-bom.version>
+    <spring-boot-bom.version>2.1.6.SP3-redhat-00001</spring-boot-bom.version>
     <fabric8.generator.from>
       registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:${openjdk18-openshift.version}
     </fabric8.generator.from>
