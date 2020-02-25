@@ -2,12 +2,19 @@ apiVersion: v1
 kind: Template
 metadata:
   name: health-check
+  labels:
+    app.kubernetes.io/part-of: health-check-example
+    app.kubernetes.io/name: health-check
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/runtime: spring-boot
+    app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
   annotations:
     iconClass: icon-spring
     tags: spring-boot, health check, java, microservice
     openshift.io/display-name: Spring Boot - Health checking of the application
     openshift.io/provider-display-name: "Red Hat, Inc."
     openshift.io/documentation-url: "https://appdev.prod-preview.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot-tomcat"
+    app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     description: >-
       When you deploy an application, its important to know if it is available and if it can start handling incoming requests. Implementing the health check pattern allows you to monitor the health of an application,
       which includes if an application is available and whether it is able to service requests.
@@ -51,6 +58,14 @@ objects:
   kind: ImageStream
   metadata:
     name: health-check
+    labels:
+      app.kubernetes.io/part-of: health-check-example
+      app.kubernetes.io/name: health-check
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/runtime: spring-boot
+      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+    annotations:
+      app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
   spec: {}
 - apiVersion: v1
   kind: ImageStream
@@ -66,6 +81,14 @@ objects:
   kind: BuildConfig
   metadata:
     name: health-check
+    labels:
+      app.kubernetes.io/part-of: health-check-example
+      app.kubernetes.io/name: health-check
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/runtime: spring-boot
+      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+    annotations:
+      app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
   spec:
     output:
       to:
@@ -111,6 +134,13 @@ objects:
       provider: snowdrop
       version: "BOOSTER_VERSION"
       group: dev.snowdrop.example
+      app.kubernetes.io/part-of: health-check-example
+      app.kubernetes.io/name: health-check
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/runtime: spring-boot
+      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+    annotations:
+      app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
   spec:
     ports:
@@ -130,6 +160,13 @@ objects:
       provider: snowdrop
       version: "BOOSTER_VERSION"
       group: dev.snowdrop.example
+      app.kubernetes.io/part-of: health-check-example
+      app.kubernetes.io/name: health-check
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/runtime: spring-boot
+      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+    annotations:
+      app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
   spec:
     replicas: 1
@@ -149,6 +186,13 @@ objects:
           provider: snowdrop
           version: "BOOSTER_VERSION"
           group: dev.snowdrop.example
+          app.kubernetes.io/part-of: health-check-example
+          app.kubernetes.io/name: health-check
+          app.kubernetes.io/component: frontend
+          app.kubernetes.io/runtime: spring-boot
+          app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+        annotations:
+          app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
       spec:
         containers:
         - env:
@@ -207,6 +251,13 @@ objects:
       provider: snowdrop
       version: "BOOSTER_VERSION"
       group: dev.snowdrop.example
+      app.kubernetes.io/part-of: health-check-example
+      app.kubernetes.io/name: health-check
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/runtime: spring-boot
+      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+    annotations:
+      app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
   spec:
     port:
