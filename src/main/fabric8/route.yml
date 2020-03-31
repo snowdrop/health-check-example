@@ -1,3 +1,5 @@
+apiVersion: route.openshift.io/v1
+type: Route
 metadata:
   labels:
     app.kubernetes.io/part-of: health-check-example
