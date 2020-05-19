@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/part-of: health-check-example
     app.kubernetes.io/name: health-check
     app.kubernetes.io/component: frontend
-    app.kubernetes.io/runtime: spring-boot
-    app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+    app.openshift.io/runtime: rh-spring-boot
+    app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
   annotations:
     iconClass: icon-spring
     tags: spring-boot, health check, java, microservice
@@ -62,8 +62,8 @@ objects:
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
-      app.kubernetes.io/runtime: spring-boot
-      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime: rh-spring-boot
+      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
   spec: {}
@@ -85,8 +85,8 @@ objects:
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
-      app.kubernetes.io/runtime: spring-boot
-      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime: rh-spring-boot
+      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
   spec:
@@ -137,8 +137,8 @@ objects:
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
-      app.kubernetes.io/runtime: spring-boot
-      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime: rh-spring-boot
+      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
@@ -163,8 +163,8 @@ objects:
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
-      app.kubernetes.io/runtime: spring-boot
-      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime: rh-spring-boot
+      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
@@ -189,8 +189,8 @@ objects:
           app.kubernetes.io/part-of: health-check-example
           app.kubernetes.io/name: health-check
           app.kubernetes.io/component: frontend
-          app.kubernetes.io/runtime: spring-boot
-          app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+          app.openshift.io/runtime: rh-spring-boot
+          app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
         annotations:
           app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
       spec:
@@ -254,8 +254,8 @@ objects:
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
-      app.kubernetes.io/runtime: spring-boot
-      app.kubernetes.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime: rh-spring-boot
+      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check

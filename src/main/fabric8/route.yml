@@ -5,8 +5,8 @@ metadata:
     app.kubernetes.io/part-of: health-check-example
     app.kubernetes.io/name: health-check
     app.kubernetes.io/component: frontend
-    app.kubernetes.io/runtime: spring-boot
-    app.kubernetes.io/runtime-version: ${spring-boot.version}
+    app.openshift.io/runtime: rh-spring-boot
+    app.openshift.io/runtime-version: ${spring-boot.version}
   annotations:
     app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
 spec:
