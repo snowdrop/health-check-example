@@ -19,11 +19,11 @@
   <parent>
     <groupId>dev.snowdrop</groupId>
     <artifactId>snowdrop-dependencies</artifactId>
-    <version>2.2.6.Beta5</version>
+    <version>2.2.6.Final-redhat-00002</version>
   </parent>
   <groupId>dev.snowdrop.example</groupId>
   <artifactId>health-check</artifactId>
-  <version>2.2.6-5-SNAPSHOT</version>
+  <version>2.2.6-5-redhat</version>
   <name>Spring Boot - Health Check Example</name>
   <description>Spring Boot - Health Check Example</description>
   <properties>
