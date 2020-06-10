@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: health-check
     app.kubernetes.io/component: frontend
     app.openshift.io/runtime: rh-spring-boot
-    app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
+    app.openshift.io/runtime-version: "2.2.6.RELEASE"
   annotations:
     iconClass: icon-spring
     tags: spring-boot, health check, java, microservice
@@ -63,7 +63,7 @@ objects:
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
       app.openshift.io/runtime: rh-spring-boot
-      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime-version: "2.2.6.RELEASE"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
   spec: {}
@@ -86,14 +86,14 @@ objects:
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
       app.openshift.io/runtime: rh-spring-boot
-      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime-version: "2.2.6.RELEASE"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: health-check:BOOSTER_VERSION
+        name: health-check:2.2.6-9
     postCommit: {}
     resources: {}
     source:
@@ -132,13 +132,13 @@ objects:
     labels:
       app: health-check
       provider: snowdrop
-      version: "BOOSTER_VERSION"
+      version: "2.2.6-9"
       group: dev.snowdrop.example
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
       app.openshift.io/runtime: rh-spring-boot
-      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime-version: "2.2.6.RELEASE"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
@@ -158,13 +158,13 @@ objects:
     labels:
       app: health-check
       provider: snowdrop
-      version: "BOOSTER_VERSION"
+      version: "2.2.6-9"
       group: dev.snowdrop.example
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
       app.openshift.io/runtime: rh-spring-boot
-      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime-version: "2.2.6.RELEASE"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
@@ -184,13 +184,13 @@ objects:
         labels:
           app: health-check
           provider: snowdrop
-          version: "BOOSTER_VERSION"
+          version: "2.2.6-9"
           group: dev.snowdrop.example
           app.kubernetes.io/part-of: health-check-example
           app.kubernetes.io/name: health-check
           app.kubernetes.io/component: frontend
           app.openshift.io/runtime: rh-spring-boot
-          app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
+          app.openshift.io/runtime-version: "2.2.6.RELEASE"
         annotations:
           app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
       spec:
@@ -200,7 +200,7 @@ objects:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: health-check:BOOSTER_VERSION
+          image: health-check:2.2.6-9
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 2
@@ -241,7 +241,7 @@ objects:
         - spring-boot
         from:
           kind: ImageStreamTag
-          name: health-check:BOOSTER_VERSION
+          name: health-check:2.2.6-9
       type: ImageChange
 - apiVersion: v1
   kind: Route
@@ -249,13 +249,13 @@ objects:
     labels:
       app: health-check
       provider: snowdrop
-      version: "BOOSTER_VERSION"
+      version: "2.2.6-9"
       group: dev.snowdrop.example
       app.kubernetes.io/part-of: health-check-example
       app.kubernetes.io/name: health-check
       app.kubernetes.io/component: frontend
       app.openshift.io/runtime: rh-spring-boot
-      app.openshift.io/runtime-version: "SPRING_BOOT_VERSION"
+      app.openshift.io/runtime-version: "2.2.6.RELEASE"
     annotations:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
