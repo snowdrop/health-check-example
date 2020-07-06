@@ -27,6 +27,9 @@ import org.arquillian.cube.openshift.impl.enricher.RouteURL;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.availability.ApplicationAvailability;
+import org.springframework.boot.availability.LivenessState;
 
 @RunWith(Arquillian.class)
 public class OpenShiftIT extends AbstractExampleApplicationTest {
@@ -34,6 +37,9 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
     @AwaitRoute(path = "/actuator/health")
     @RouteURL("${app.name}")
     private URL baseURL;
+
+    @Autowired
+    private ApplicationAvailability applicationAvailability;
 
     @Test
     public void testStopServiceEndpoint() {
@@ -60,12 +66,21 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
         return baseURL.toString();
     }
 
-    private boolean isAlive() {
+    private boolean isAlive2() {
         try {
             return given().baseUri(baseURI()).get("/actuator/health").getStatusCode() == 200;
         } catch (Exception e) {
             return false;
         }
     }
+
+    private boolean isAlive() {
+        LivenessState livenessState = applicationAvailability.getLivenessState();
+        if(livenessState.equals(LivenessState.CORRECT)) {
+            return true;
+        }
+        return false;
+    }
+
 
 }
