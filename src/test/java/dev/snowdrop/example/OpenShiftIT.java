@@ -18,6 +18,7 @@ package dev.snowdrop.example;
 
 import static io.restassured.RestAssured.given;
 import static org.awaitility.Awaitility.await;
+import static org.hamcrest.CoreMatchers.is;
 
 import dev.snowdrop.example.service.GreetingProperties;
 
@@ -25,6 +26,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import io.restassured.response.Response;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.arquillian.cube.openshift.impl.enricher.AwaitRoute;
 import org.arquillian.cube.openshift.impl.enricher.RouteURL;
@@ -48,19 +50,6 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
     @RouteURL("${app.name}")
     private URL baseURL;
 
-    @Autowired
-    private ApplicationAvailability applicationAvailability;
-
-    @Deployment
-    public static WebArchive createDeployment() {
-
-        File[] files = Maven.resolver().loadPomFromFile("pom.xml")
-                .importRuntimeDependencies().resolve().withTransitivity().asFile();
-
-        return ShrinkWrap.create(WebArchive.class)
-                .addAsLibraries(files);
-    }
-
 
     @Test
     public void testStopServiceEndpoint() {
@@ -70,10 +59,10 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
            .then()
            .statusCode(200);
 
-        await("Await for the application to die").atMost(5, TimeUnit.MINUTES)
+        await("Await for the application to die").atMost(1, TimeUnit.MINUTES)
                 .until(() -> !isAlive());
 
-        await("Await for the application to restart").atMost(5, TimeUnit.MINUTES)
+        await("Await for the application to restart").atMost(1, TimeUnit.MINUTES)
                 .until(this::isAlive);
     }
 
@@ -87,7 +76,7 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
         return baseURL.toString();
     }
 
-    private boolean isAlive2() {
+    private boolean isAlive() {
         try {
             return given().baseUri(baseURI()).get("/actuator/health").getStatusCode() == 200;
         } catch (Exception e) {
@@ -95,13 +84,6 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
         }
     }
 
-    private boolean isAlive() {
-        LivenessState livenessState = applicationAvailability.getLivenessState();
-        if(livenessState.equals(LivenessState.CORRECT)) {
-            return true;
-        }
-        return false;
-    }
 
 
 }
