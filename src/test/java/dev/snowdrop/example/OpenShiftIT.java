@@ -50,7 +50,6 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
     @RouteURL("${app.name}")
     private URL baseURL;
 
-
     @Test
     public void testStopServiceEndpoint() {
         given()
@@ -59,11 +58,14 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
            .then()
            .statusCode(200);
 
-        await("Await for the application to die").atMost(1, TimeUnit.MINUTES)
+        await("Await for the application to die").atMost(5, TimeUnit.MINUTES)
                 .until(() -> !isAlive());
 
-        await("Await for the application to restart").atMost(1, TimeUnit.MINUTES)
+        await("Await for the application to restart").atMost(5, TimeUnit.MINUTES)
                 .until(this::isAlive);
+
+        await("Await for the application to be ready").atMost(5, TimeUnit.MINUTES)
+                .until(this::isReady);
     }
 
     @Override
@@ -78,12 +80,18 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
 
     private boolean isAlive() {
         try {
-            return given().baseUri(baseURI()).get("/actuator/health").getStatusCode() == 200;
+            return given().baseUri(baseURI()).get("/actuator/health/liveness").getStatusCode() == 200;
         } catch (Exception e) {
             return false;
         }
     }
 
-
+    private boolean isReady() {
+        try {
+            return given().baseUri(baseURI()).get("/actuator/health/readiness").getStatusCode() == 200;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
