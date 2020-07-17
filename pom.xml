@@ -31,7 +31,7 @@
     <openjdk18-openshift.version>latest</openjdk18-openshift.version>
     <rest-assured.version>3.1.0</rest-assured.version>
     <spring-boot.version>2.1.15.RELEASE</spring-boot.version>
-    <spring-boot-bom.version>2.1.15.Beta2</spring-boot-bom.version>
+    <spring-boot-bom.version>2.1.15.Final</spring-boot-bom.version>
     <fabric8.generator.from>
       registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:${openjdk18-openshift.version}
     </fabric8.generator.from>
