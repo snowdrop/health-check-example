@@ -32,6 +32,8 @@ jobs:
                 git clone https://github.com/snowdrop/spring-boot-bom.git
                 cd spring-boot-bom
                 git fetch --all --tags --prune
+                #Until we have a first 2.3.x release we will checkout the sb-2.3.x branch instead of the tag
+                #git checkout tags/${parent_version}
                 git checkout sb-2.3.x
                 mvn install
 
