@@ -18,6 +18,7 @@ package dev.snowdrop.example.service;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
+import org.apache.catalina.LifecycleState;
 
 public class TomcatShutdown {
 
@@ -33,6 +34,12 @@ public class TomcatShutdown {
             System.exit(0);
         }
 
+        if (LifecycleState.STARTED.equals(context.getState())) {
+            stopContext();
+        }
+    }
+
+    private void stopContext() {
         try {
             System.out.println("Stopping Tomcat context.");
             context.stop();
@@ -41,5 +48,4 @@ public class TomcatShutdown {
             System.exit(0);
         }
     }
-
 }
