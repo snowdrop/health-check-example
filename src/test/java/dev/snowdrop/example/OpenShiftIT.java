@@ -44,13 +44,13 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
            .then()
            .statusCode(200);
 
-        await("Await for the application to die").atMost(5, TimeUnit.MINUTES)
+        await("Await for the application to die").atMost(1, TimeUnit.MINUTES)
                 .until(() -> !isAlive());
 
-        await("Await for the application to restart").atMost(5, TimeUnit.MINUTES)
+        await("Await for the application to restart").atMost(1, TimeUnit.MINUTES)
                 .until(this::isAlive);
 
-        await("Await for the application to be ready").atMost(5, TimeUnit.MINUTES)
+        await("Await for the application to be ready").atMost(1, TimeUnit.MINUTES)
                 .until(this::isReady);
     }
 
