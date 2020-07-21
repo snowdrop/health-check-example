@@ -48,7 +48,7 @@ jobs:
           paths:
             - ~/.m2
           key: spring-boot-health-booster-{{ .Branch }}-{{ checksum "pom.xml" }}
-
+# TO DO: able the s2i build once the snowdrop-dependencies:pom:2.3.1 will be released
 #      - run:
 #          name: run tests against s2i build
 #          command: |
@@ -72,15 +72,15 @@ jobs:
 #
 #            # launch the tests without deploying the application
 #            ./mvnw -s .circleci/settings.xml verify -Dfabric8.skip=true -Popenshift,openshift-it
-
-      - run:
-          name: Cleanup s2i build
-          command: |
-            oc delete all --all
-            sleep 5
-            oc delete project s2i
-            sleep 10
-            echo "Cleaned up s2i build"
+#
+#      - run:
+#          name: Cleanup s2i build
+#          command: |
+#            oc delete all --all
+#            sleep 5
+#            oc delete project s2i
+#            sleep 10
+#            echo "Cleaned up s2i build"
 
       - run:
           name: run tests against fmp build
