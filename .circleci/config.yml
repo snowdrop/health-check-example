@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
 
-      - openshift/launch_openshift:
+      - openshift/launch_openshift
 
       # based on this: https://discuss.circleci.com/t/circle-2-0-caching-is-too-limited-to-be-very-useful/11694/10
       - restore_cache:
