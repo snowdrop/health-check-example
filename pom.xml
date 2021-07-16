@@ -19,11 +19,11 @@
   <parent>
     <groupId>dev.snowdrop</groupId>
     <artifactId>snowdrop-dependencies</artifactId>
-    <version>2.3.6.Final</version>
+    <version>2.3.10.Beta1</version>
   </parent>
   <groupId>dev.snowdrop.example</groupId>
   <artifactId>health-check</artifactId>
-  <version>2.3.6-4-SNAPSHOT</version>
+  <version>2.3.10-1-SNAPSHOT</version>
   <name>Spring Boot - Health Check Example</name>
   <description>Spring Boot - Health Check Example</description>
   <properties>
@@ -31,7 +31,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <arquillian.version>1.4.0.Final</arquillian.version>
     <arquillian-cube.version>1.18.2</arquillian-cube.version>
-    <spring-boot.version>2.3.6.RELEASE</spring-boot.version>
+    <spring-boot.version>2.3.10.RELEASE</spring-boot.version>
     <ubi.version>1.3</ubi.version>
     <fabric8.generator.from>
       registry.access.redhat.com/ubi8/openjdk-8:${ubi.version}
