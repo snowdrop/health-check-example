@@ -31,6 +31,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <arquillian.version>1.4.0.Final</arquillian.version>
     <arquillian-cube.version>1.18.2</arquillian-cube.version>
     <junit-vintaje.version>5.6.3</junit-vintaje.version>
