@@ -16,22 +16,21 @@
 package dev.snowdrop.example;
 
 import static io.restassured.RestAssured.given;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.inOrder;
 
-import dev.snowdrop.example.service.GreetingProperties;
-import dev.snowdrop.example.service.TomcatShutdown;
-import org.apache.catalina.Context;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+import dev.snowdrop.example.service.GreetingProperties;
+import dev.snowdrop.example.service.TomcatShutdown;
+
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LocalTest extends AbstractExampleApplicationTest {
 
@@ -53,10 +52,7 @@ public class LocalTest extends AbstractExampleApplicationTest {
             .statusCode(200);
 
         InOrder inOrder = inOrder(tomcatShutdown);
-        inOrder.verify(tomcatShutdown)
-                .setContext(any(Context.class));
-        inOrder.verify(tomcatShutdown)
-                .shutdown();
+        inOrder.verify(tomcatShutdown).shutdown();
     }
 
     @Override

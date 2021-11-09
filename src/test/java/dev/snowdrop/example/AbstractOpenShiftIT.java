@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Red Hat, Inc, and individual contributors.
+ * Copyright 2021 Red Hat, Inc, and individual contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,16 @@
 
 package dev.snowdrop.example;
 
-import dev.snowdrop.example.service.GreetingProperties;
-import org.arquillian.cube.openshift.impl.enricher.AwaitRoute;
-import org.arquillian.cube.openshift.impl.enricher.RouteURL;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
 import static io.restassured.RestAssured.given;
 import static org.awaitility.Awaitility.await;
 
-@RunWith(Arquillian.class)
-public class OpenShiftIT extends AbstractExampleApplicationTest {
+import java.util.concurrent.TimeUnit;
 
-    @AwaitRoute(path = "/actuator/health")
-    @RouteURL("${app.name}")
-    private URL baseURL;
+import org.junit.jupiter.api.Test;
+
+import dev.snowdrop.example.service.GreetingProperties;
+
+public abstract class AbstractOpenShiftIT extends AbstractExampleApplicationTest {
 
     @Test
     public void testStopServiceEndpoint() {
@@ -59,14 +50,9 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
         return new GreetingProperties();
     }
 
-    @Override
-    protected String baseURI() {
-        return baseURL.toString();
-    }
-
     private boolean isAlive() {
         try {
-            return given().baseUri(baseURI()).get("/actuator/health/liveness").getStatusCode() == 200;
+            return given().baseUri(baseURI()).get("actuator/health/liveness").getStatusCode() == 200;
         } catch (Exception e) {
             return false;
         }
@@ -74,7 +60,7 @@ public class OpenShiftIT extends AbstractExampleApplicationTest {
 
     private boolean isReady() {
         try {
-            return given().baseUri(baseURI()).get("/actuator/health/readiness").getStatusCode() == 200;
+            return given().baseUri(baseURI()).get("actuator/health/readiness").getStatusCode() == 200;
         } catch (Exception e) {
             return false;
         }
