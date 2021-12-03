@@ -1,0 +1,90 @@
+name: "Pull Request Build"
+on:
+  workflow_dispatch:
+  pull_request:
+jobs:
+  linux-build-local:
+    name: PR - Linux - JVM ${{ matrix.java }} - Local
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 8 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Setup Java
+        uses: actions/setup-java@v2.3.1
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Build
+        run: ./mvnw -s .github/mvn-settings.xml clean verify
+  linux-build-ocp:
+    name: PR - Linux - JVM ${{ matrix.java }} - OpenShift ${{ matrix.openshift }}
+    needs: linux-build-local
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 8 ]
+        openshift: [ v3.11.0 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Setup Java
+        uses: actions/setup-java@v2.3.1
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Setup OpenShift
+        uses: manusa/actions-setup-openshift@v1.1.3
+        with:
+          oc version: ${{ matrix.openshift }}
+          dns ip: 1.1.1.1
+          github token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Project using Dekorate
+        run: |
+          oc new-project dekorate
+          sh run_tests_with_dekorate.sh
+      - name: Delete Project using Dekorate
+        run: oc delete project dekorate
+      - name: Build Project using S2i
+        run: |
+          oc new-project s2i
+          oc create -f .openshiftio/application.yaml
+          oc new-app --template=health-check -p SOURCE_REPOSITORY_URL="${{ github.event.pull_request.head.repo.owner.html_url }}/${{ github.event.pull_request.head.repo.name }}" -p SOURCE_REPOSITORY_REF=${{ github.head_ref }}
+
+          sleep 30 # needed in order to bypass the 'Pending' state
+          # wait for the app to stand up
+          timeout 300s bash -c 'while [[ $(oc get pod -o json | jq  ".items[] | select(.metadata.name | contains(\"build\"))  | .status  " | jq -rs "sort_by(.startTme) | last | .phase") == "Running" ]]; do sleep 20; done; echo ""'
+
+          # launch the tests without deploying the application
+          sh run_tests_with_s2i.sh
+      - name: Delete Project using S2i
+        run: oc delete project s2i
+  linux-build-kubernetes:
+    name: PR - Linux - JVM ${{ matrix.java }} - Kubernetes
+    needs: linux-build-ocp
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 8 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Setup Java
+        uses: actions/setup-java@v2.3.1
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Kubernetes KinD Cluster
+        uses: container-tools/kind-action@v1
+        with:
+          version: v0.11.1
+          registry: true
+      - name: Build Project using Dekorate
+        run: |
+          kubectl create namespace k8s
+          ./mvnw -s .github/mvn-settings.xml clean verify -Pkubernetes,kubernetes-it -Ddekorate.docker.registry=kind-registry:5000 -Dkubernetes.namespace=k8s -Ddekorate.push=true
