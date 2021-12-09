@@ -1,5 +1,7 @@
 # Health Check Spring Boot Example
 
+https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot
+
 ## Table of Contents
 
 * [Health Check Spring Boot Example](#health-check-spring-boot-example)
@@ -8,8 +10,6 @@
     * [Running Tests on OpenShift using S2i from Source](#running-tests-on-openshift-using-s2i-from-source)
     * [Running Tests on Kubernetes with External Registry](#running-tests-on-kubernetes-with-external-registry)
 
-
-https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot
 
 ## Deploying application on OpenShift using Dekorate
 
