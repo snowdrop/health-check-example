@@ -18,6 +18,7 @@ package dev.snowdrop.example;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
 import dev.snowdrop.example.service.GreetingProperties;
@@ -25,6 +26,16 @@ import dev.snowdrop.example.service.GreetingProperties;
 public abstract class AbstractExampleApplicationTest {
 
     private static final String GREETING_PATH = "api/greeting";
+
+    private static final String INDEX_HTML = "index.html";
+
+    @Test
+    public void testGetIndex() {
+        given()
+                .baseUri(baseURI())
+                .get(INDEX_HTML)
+                .then().statusCode(HttpStatus.SC_OK);
+    }
 
     @Test
     public void testGreetingEndpoint() {
