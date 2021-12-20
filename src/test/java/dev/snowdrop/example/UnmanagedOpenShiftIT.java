@@ -16,45 +16,38 @@
 
 package dev.snowdrop.example;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import io.dekorate.testing.annotation.Inject;
 import io.dekorate.testing.openshift.annotation.OpenshiftIntegrationTest;
-import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.client.KubernetesClient;
-import io.fabric8.kubernetes.client.LocalPortForward;
+import io.fabric8.openshift.api.model.Route;
+import io.fabric8.openshift.client.OpenShiftClient;
 
 @EnabledIfSystemProperty(named = "unmanaged-test", matches = "true")
 @OpenshiftIntegrationTest(deployEnabled = false, buildEnabled = false, pushEnabled = false)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UnmanagedOpenShiftIT extends AbstractOpenShiftIT {
 
     @Inject
     KubernetesClient client;
 
-    @Inject
-    Pod pod;
+    String baseURI;
 
-    LocalPortForward appPort;
-
-    @BeforeEach
+    @BeforeAll
     public void setup() {
-        appPort = client.pods().withName(pod.getMetadata().getName()).portForward(8080);
-    }
-
-    @AfterEach
-    public void tearDown() throws IOException {
-        if (appPort != null) {
-            appPort.close();
-        }
+        // TODO: In Dekorate 2.7, we can inject Routes directly, so we won't need to do this:
+        Route route = client.adapt(OpenShiftClient.class).routes().withName("health-check").get();
+        String protocol = route.getSpec().getTls() == null ? "http" : "https";
+        int port = "http".equals(protocol) ? 80 : 443;
+        baseURI = String.format("%s://%s:%s/", protocol, route.getSpec().getHost(), port, "/");
     }
 
     @Override
-    protected String baseURI() {
-        return "http://localhost:" + appPort.getLocalPort() + "/";
+    public String baseURI() {
+        return baseURI;
     }
 
 }
