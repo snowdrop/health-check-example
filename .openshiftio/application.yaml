@@ -260,6 +260,7 @@ objects:
       app.kubernetes.io/vcs-uri: git@github.com:snowdrop/health-check-example.git
     name: health-check
   spec:
+    path: /
     port:
       targetPort: 8080
     to:
