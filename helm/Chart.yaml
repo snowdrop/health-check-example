@@ -1,5 +1,5 @@
 apiVersion: v2
-name: health-check
+name: spring-boot-example-health-check
 version: 0.0.1-SNAPSHOT
 description: A Helm chart to build and deploy Spring Boot application with Health Checks
 keywords:
