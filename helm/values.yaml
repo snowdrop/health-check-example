@@ -1,3 +1,8 @@
 spring-boot-example-app:
   name: health-check
   version: 2.5.8-1-SNAPSHOT
+  s2i:
+    # Default s2i source repository
+    source:
+      repo: https://github.com/snowdrop/health-check-example
+      ref: sb-2.5.x
