@@ -26,7 +26,7 @@ First, make sure you have installed [the Helm command line](https://helm.sh/docs
 Then, you need to install the example by doing:
 
 ```
-helm install healthcheck ./helm -f helm/values-ocp-defaults.yaml --set app.s2i.source.repo=https://github.com/snowdrop/health-check-example --set app.s2i.source.ref=<branch-to-use>
+helm install healthcheck ./helm --set app.route.expose=true --set app.s2i.source.repo=https://github.com/snowdrop/health-check-example --set app.s2i.source.ref=<branch-to-use>
 ```
 
 **note**: Replace `<branch-to-use>` with one branch from `https://github.com/snowdrop/health-check-example/branches/all`.
@@ -42,22 +42,11 @@ helm uninstall healthcheck
 Requirements:
 - Have installed [the Helm command line](https://helm.sh/docs/intro/install/)
 - Have connected/logged to a kubernetes cluster
-- Have logged in a container registry like quay.io
 
-First, you need to build and publish the image of the example to deploy in Kubernetes:
-
-```
-CONTAINER_REGISTRY=<your container registry: for example "quay.io/user">
-IMAGE=healthcheck:latest
-docker build . -t $IMAGE
-docker tag $IMAGE $CONTAINER_REGISTRY/$IMAGE
-docker push $CONTAINER_REGISTRY/$IMAGE
-```
-
-Then, you need to install the example by doing:
+You need to install the example by doing:
 
 ```
-helm install healthcheck ./helm -n <k8s namespace> --set app.docker.image=$CONTAINER_REGISTRY/$IMAGE --set app.ingress.host=<your k8s domain>
+helm install healthcheck ./helm --set app.ingress.host=<your k8s domain>
 ```
 
 And to uninstall the chart, execute:

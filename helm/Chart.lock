@@ -3,4 +3,4 @@ dependencies:
   repository: http://localhost:8080
   version: 0.0.4
 digest: sha256:e6423b099d4d1b426c5a1e7ee1ba3421e07a42cf80f8d9584ba9ce370b0a8204
-generated: "2022-02-07T12:17:50.921366846+01:00"
+generated: "2022-02-08T14:58:39.757755044+01:00"
