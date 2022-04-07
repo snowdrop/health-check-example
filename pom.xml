@@ -19,11 +19,11 @@
   <parent>
     <groupId>dev.snowdrop</groupId>
     <artifactId>snowdrop-dependencies</artifactId>
-    <version>2.5.10.Final</version>
+    <version>2.5.12.Beta1</version>
   </parent>
   <groupId>dev.snowdrop.example</groupId>
   <artifactId>health-check</artifactId>
-  <version>2.5.10-5-SNAPSHOT</version>
+  <version>2.5.12-1-SNAPSHOT</version>
   <name>Spring Boot - Health Check Example</name>
   <description>Spring Boot - Health Check Example</description>
   <properties>
@@ -33,7 +33,7 @@
     <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <spring-boot.version>2.5.10</spring-boot.version>
+    <spring-boot.version>2.5.12</spring-boot.version>
   </properties>
   <licenses>
     <license>
