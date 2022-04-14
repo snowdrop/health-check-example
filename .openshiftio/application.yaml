@@ -208,7 +208,7 @@ objects:
               path: /actuator/health
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 60
+            initialDelaySeconds: 120
             periodSeconds: 3
             timeoutSeconds: 1
           name: spring-boot
