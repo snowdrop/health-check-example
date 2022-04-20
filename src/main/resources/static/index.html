@@ -19,7 +19,7 @@
             <p>Demonstrates how the Kubernetes health checks work to determine if a container is still alive (the <em>liveness</em>          of the container) and ready to serve the traffic for the HTTP endpoints of the application (the <em>readiness</em>          of the container).</p>
           </div>
           <div class="paragraph">
-            <p>To demonstrate this behavior, the application configures a <code>/health</code> HTTP endpoint, which is used by Kubernetes
+            <p>To demonstrate this behavior, the application configures a <code>/actuator/health</code> HTTP endpoint, which is used by Kubernetes
               to issue HTTP requests. If the container is still alive—​which means the Health HTTP endpoint is able to reply—​the
               management platform will receive HTTP code 200 as a response, and no further action is taken. After you click the
               <code>Stop Service</code> button, the HTTP endpoint stops returning a response, and the platform then restarts the pod
