@@ -25,3 +25,6 @@ nbdist/
 
 # VSCodium
 .vscode
+
+# Misc
+*.versionsBackup
