@@ -33,7 +33,6 @@
     <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <spring-boot.version>2.5.12</spring-boot.version>
   </properties>
   <licenses>
     <license>
