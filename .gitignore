@@ -22,3 +22,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+# VSCodium
+.vscode
+
+# Misc
+*.versionsBackup
