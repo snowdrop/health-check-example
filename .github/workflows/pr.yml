@@ -96,3 +96,10 @@ jobs:
           ./run_tests_with_dekorate_in_k8s.sh $KIND_REGISTRY k8s
       - name: Delete Project using k8s
         run: kubectl delete namespace k8s
+      - name: Build Project using the generated Helm by Dekorate
+        run: |
+          kubectl create namespace genhelm
+          ./run_tests_with_generated_helm_in_k8s.sh $KIND_REGISTRY genhelm
+      - name: Delete Project using the generated Helm by Dekorate
+        run: kubectl delete namespace genhelm
+

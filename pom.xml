@@ -276,5 +276,14 @@
         </dependency>
       </dependencies>
     </profile>
+    <profile>
+      <id>helm</id>
+      <dependencies>
+        <dependency>
+          <groupId>io.dekorate</groupId>
+          <artifactId>helm-annotations</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
   </profiles>
 </project>
