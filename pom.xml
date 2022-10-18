@@ -30,7 +30,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <spring-boot.version>2.7.2</spring-boot.version>
-    <dekorate.version>2.11.0</dekorate.version>
+    <dekorate.version>2.11.3</dekorate.version>
 
     <!-- Overriden from Spring Boot -->
     <tomcat.version>9.0.65</tomcat.version>
@@ -155,12 +155,6 @@
       <groupId>io.dekorate</groupId>
       <artifactId>kubernetes-junit</artifactId>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>io.dekorate</groupId>
-          <artifactId>docker-annotations</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>

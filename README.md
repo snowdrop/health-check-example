@@ -64,14 +64,14 @@ helm uninstall healthcheck
 ## Running Tests on OpenShift using Dekorate
 
 ```bash
-./run_tests_with_dekorate.sh
+./run_tests_with_dekorate_in_ocp.sh
 ```
 
 Alternativelly, tests can be executed against a specific Spring Boot or Dekorate version by passing the
 version as a `-D<variable property name>=value` parameter. For instance overriding both the Spring Boot and the Dekorate versions using their corresponding version properties is done the following way:
 
 ```bash
-./run_tests_with_dekorate.sh -Dspring-boot.version=2.7.3 -Ddekorate.version=2.11.1
+./run_tests_with_dekorate_in_ocp.sh -Dspring-boot.version=2.7.3 -Ddekorate.version=2.11.1
 ```
 
 

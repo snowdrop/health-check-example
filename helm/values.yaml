@@ -1,5 +1,5 @@
 app:
   name: health-check
-  version: 2.5.8-1-SNAPSHOT
+  version: 2.7-SNAPSHOT
   docker:
-    image: quay.io/snowdrop/spring-boot-health-check-example:2.5.8
+    image: quay.io/snowdrop/spring-boot-health-check-example:2.7
