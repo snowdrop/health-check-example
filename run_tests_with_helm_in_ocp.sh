@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 SOURCE_REPOSITORY_URL=${1:-https://github.com/snowdrop/health-check-example}
-SOURCE_REPOSITORY_REF=${2:-sb-2.5.x}
+SOURCE_REPOSITORY_REF=${2:-sb-2.7.x}
 S2I_BUILDER_IMAGE_REPO=registry.access.redhat.com/ubi8/openjdk-11
 S2I_BUILDER_IMAGE_TAG=1.14
 
@@ -12,5 +12,5 @@ if [[ $(waitFor "health-check" "app") -eq 1 ]] ; then
   exit 1
 fi
 
-# Run OpenShift Tests
+# Run Tests
 ./mvnw -s .github/mvn-settings.xml clean verify -Popenshift,openshift-it -Dunmanaged-test=true
