@@ -3,7 +3,7 @@
 #   . --repository-url
 #   . --branch-to-test
 #   . --maven-settings
-SOURCE_REPOSITORY_URL="https://github.com/snowdrop/configmap-example"
+SOURCE_REPOSITORY_URL="https://github.com/snowdrop/health-check-example"
 SOURCE_REPOSITORY_REF="sb-2.7.x"
 MAVEN_SETTINGS_REF=""
 
