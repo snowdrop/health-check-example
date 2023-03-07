@@ -33,7 +33,7 @@
 
     <!-- Overriden from Spring Boot -->
     <tomcat.version>9.0.71</tomcat.version>
-  </properties>
+  <dekorate>2.11.6</dekorate><tomcat-embed-core>9.0.71</tomcat-embed-core></properties>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
