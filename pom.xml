@@ -17,7 +17,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>dev.snowdrop.example</groupId>
   <artifactId>health-check</artifactId>
-  <version>2.7.10-1-redhat</version>
+  <version>2.7.10-2-SNAPSHOT</version>
   <name>Spring Boot - Health Check Example</name>
   <description>Spring Boot - Health Check Example</description>
   <properties>
@@ -29,10 +29,10 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <spring-boot.version>2.7.10</spring-boot.version>
-    <dekorate.version>2.11.5.redhat-00008</dekorate.version>
+    <dekorate.version>2.11.6</dekorate.version>
 
     <!-- Overriden from Spring Boot -->
-    <tomcat.version>9.0.62.redhat-00005</tomcat.version>
+    <tomcat.version>9.0.73</tomcat.version>
   </properties>
   <licenses>
     <license>
