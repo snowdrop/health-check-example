@@ -17,7 +17,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>dev.snowdrop.example</groupId>
   <artifactId>health-check</artifactId>
-  <version>2.7.10-2-SNAPSHOT</version>
+  <version>2.7.11-1-SNAPSHOT</version>
   <name>Spring Boot - Health Check Example</name>
   <description>Spring Boot - Health Check Example</description>
   <properties>
@@ -28,7 +28,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <spring-boot.version>2.7.10</spring-boot.version>
+    <spring-boot.version>2.7.11</spring-boot.version>
     <dekorate.version>2.11.6</dekorate.version>
 
     <!-- Overriden from Spring Boot -->
