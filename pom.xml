@@ -32,7 +32,7 @@
     <dekorate.version>2.11.6</dekorate.version>
 
     <!-- Overriden from Spring Boot -->
-    <tomcat.version>9.0.74</tomcat.version>
+    <tomcat.version>9.0.75</tomcat.version>
   </properties>
   <licenses>
     <license>
